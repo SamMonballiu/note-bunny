@@ -11,7 +11,7 @@ namespace NoteBunny.BLL.Interfaces
         void Update(T record);
         bool Delete(T record);
         bool Delete(Predicate<T> condition);
-        void First(Predicate<T> condition);
+        T First(Predicate<T> condition);
         T FindById(string id);
         void Save();
     }

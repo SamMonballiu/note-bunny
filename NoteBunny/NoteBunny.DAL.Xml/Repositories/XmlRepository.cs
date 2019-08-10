@@ -46,7 +46,7 @@ namespace NoteBunny.DAL.Xml.Repositories
 
         public T FindById(string id) => _items.FirstOrDefault(x => x.Id == id);
 
-        public void First(Predicate<T> condition) => _items.FirstOrDefault(x => condition(x));
+        public T First(Predicate<T> condition) => _items.FirstOrDefault(x => condition(x));
 
         public IQueryable<T> GetAll() => _items.AsQueryable();
 

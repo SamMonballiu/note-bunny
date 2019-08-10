@@ -6,5 +6,6 @@ namespace NoteBunny.BLL.Models
     {
         public string Content { get; set; }
         public List<Tag> Tags { get; set; }
+        public List<string> TagIds { get; set; }
     }
 }
