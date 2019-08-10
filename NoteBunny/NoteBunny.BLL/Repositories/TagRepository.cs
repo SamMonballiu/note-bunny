@@ -19,7 +19,7 @@ namespace NoteBunny.BLL.Repositories
         {
             if (String.IsNullOrWhiteSpace(tagString))
             {
-                throw new InvalidOperationException("No valid tags supplied");
+                return;
             }
 
             var existingTags = _tagRepo.GetAll();
@@ -41,7 +41,7 @@ namespace NoteBunny.BLL.Repositories
             var results = new List<Tag>();
 
             var tagSearchTerms = tagString.Split(',');
-            
+
             foreach (var tag in tagSearchTerms)
             {
                 var foundTag = FindStringByName(tag);
@@ -86,5 +86,14 @@ namespace NoteBunny.BLL.Repositories
                 .Select(x => x.Id)
                 .ToList();
         }
+
+        public IQueryable<Tag> GetAll() => _tagRepo.GetAll();
+        public void Add(Tag record) => _tagRepo.Add(record);
+        public void Update(Tag record) => _tagRepo.Update(record);
+        public bool Delete(Tag record) => _tagRepo.Delete(record);
+        public bool Delete(Predicate<Tag> condition) => _tagRepo.Delete(condition);
+        public Tag First(Predicate<Tag> condition) => _tagRepo.First(condition);
+        public Tag FindById(string id) => _tagRepo.FindById(id);
+        public void Save() => _tagRepo.Save();
     }
 }

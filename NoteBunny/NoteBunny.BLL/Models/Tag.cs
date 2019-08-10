@@ -10,5 +10,6 @@
         }
 
         public Tag() { }
+        public override string ToString() => Name;
     }
 }
