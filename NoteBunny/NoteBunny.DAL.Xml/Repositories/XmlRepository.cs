@@ -48,7 +48,11 @@ namespace NoteBunny.DAL.Xml.Repositories
 
         public T First(Predicate<T> condition) => _items.FirstOrDefault(x => condition(x));
 
-        public IQueryable<T> GetAll() => _items.AsQueryable();
+        public IQueryable<T> GetAll()
+        {
+            _items = GetItems();
+            return _items.AsQueryable();
+        }
 
         public void Save() => ObjectSerializer.ObjectSerializer<List<T>>.SerializeXmlObject(_items, _filename);
 
