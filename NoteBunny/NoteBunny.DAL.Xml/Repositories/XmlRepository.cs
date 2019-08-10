@@ -14,6 +14,7 @@ namespace NoteBunny.DAL.Xml.Repositories
         public XmlRepository(string filename)
         {
             _filename = filename;
+            _items = GetItems();
         }
         public List<T> GetItems()
         {
