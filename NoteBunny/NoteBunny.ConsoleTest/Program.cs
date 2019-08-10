@@ -14,8 +14,6 @@ namespace NoteBunny.ConsoleTest
         
         static void Main(string[] args)
         {
-            
-
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -24,6 +22,8 @@ namespace NoteBunny.ConsoleTest
                 var input = Console.ReadLine();
                 switch (input)
                 {
+                    case "":
+                        break;
                     case "quit":
                     case "q":
                         Environment.Exit(0);
@@ -35,6 +35,9 @@ namespace NoteBunny.ConsoleTest
                     case "tagsearch":
                         ShowTagIdSearchMenu();
                         break;
+                    case "shownotes":
+                        ShowNoteDetails();
+                        break;
                     case "newnote":
                         ShowNewNoteMenu();
                         break;
@@ -45,24 +48,39 @@ namespace NoteBunny.ConsoleTest
             }
         }
 
+        private static void ShowNoteDetails()
+        {
+            var repos = GetStandardRepositories();
+            foreach (var note in repos.noteRepository.GetNotesWithTags())
+            {
+                Console.WriteLine("[Content] " + note.Content);
+                Console.WriteLine("[Tags]");
+                foreach (var tag in note.Tags)
+                {
+                    Console.WriteLine(tag.Name);
+                }
+            }
+        }
+
         private static void ShowTagIdSearchMenu()
         {
             var repos = GetStandardRepositories();
             Console.WriteLine("[SEARCH TAGS BASED ON NAMES]");
             Console.Write("? ");
             var input = Console.ReadLine();
-            var searchTerms = input.Replace(" ", String.Empty).Split(',').ToList();
+            var searchTerms = input.Split(',').ToList();
             var results = repos.tagRepository.GetTagIdsFromNames(searchTerms);
             results.ForEach(id => Console.WriteLine(id));
         }
 
-        private static (XmlRepository<Tag> tagsRepoXml, TagRepository tagRepository, XmlRepository<Note> noteRepository) GetStandardRepositories()
+        private static (TagRepository tagRepository, NoteRepository noteRepository) GetStandardRepositories()
         {
             var tagsRepoXml = new XmlRepository<Tag>("tags.xml");
             var tagRepository = new TagRepository(tagsRepoXml);
-            var noteRepository = new XmlRepository<Note>("notes.xml");
+            var noteRepoXml = new XmlRepository<Note>("notes.xml");
+            var noteRepository = new NoteRepository(noteRepoXml, tagRepository);
 
-            return (tagsRepoXml, tagRepository, noteRepository);
+            return (tagRepository, noteRepository);
         }
 
         private static void ShowNewTagMenu()
@@ -89,7 +107,7 @@ namespace NoteBunny.ConsoleTest
             var note = new Note()
             {
                 Content = content,
-                Tags = tags
+                TagIds = tagRepository.GetTagIdsFromNames(tags.Select(x => x.Name).ToList())
             };
 
             noteRepository.Add(note);
