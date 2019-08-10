@@ -25,6 +25,8 @@ namespace NoteBunny.BLL.Repositories
         public Note FindById(string id) => _noteRepo.FindById(id);
         public Note First(Predicate<Note> condition) => _noteRepo.First(condition);
         public IQueryable<Note> GetAll() => GetNotesWithTags().AsQueryable();
+        public void Save() => _noteRepo.Save();
+        public void Update(Note record) => _noteRepo.Update(record);
 
         public IEnumerable<Note> GetNotesWithTags()
         {
@@ -37,14 +39,5 @@ namespace NoteBunny.BLL.Repositories
             return notes;
         }
 
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Note record)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
