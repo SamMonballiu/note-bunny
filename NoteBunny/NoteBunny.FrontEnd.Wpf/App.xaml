@@ -8,5 +8,9 @@
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
+        <Style TargetType="Label" x:Key="AppHeader">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Thin"/>
+        </Style>
     </Application.Resources>
 </Application>

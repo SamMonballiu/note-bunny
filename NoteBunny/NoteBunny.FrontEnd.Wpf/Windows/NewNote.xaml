@@ -15,7 +15,7 @@
 
         <StackPanel HorizontalAlignment="Left" Margin="0 12 0 0">
             <Label Width="100" HorizontalAlignment="Left">Content:</Label>
-            <TextBox Width="400" AcceptsReturn="True" Height="200" x:Name="txtContent"/>
+            <TextBox Width="400" AcceptsReturn="True" Height="200" TextWrapping="Wrap" x:Name="txtContent"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="0 12 0 0">
