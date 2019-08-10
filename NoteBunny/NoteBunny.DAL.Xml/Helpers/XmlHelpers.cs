@@ -1,4 +1,5 @@
-﻿using NoteBunny.BLL.Models;
+﻿using NoteBunny.BLL.Interfaces;
+using NoteBunny.BLL.Models;
 using NoteBunny.BLL.Repositories;
 using NoteBunny.DAL.Xml.Repositories;
 
@@ -6,7 +7,7 @@ namespace NoteBunny.DAL.Xml.Helpers
 {
     public class XmlHelpers
     {
-        public static (TagRepository tagRepository, NoteRepository noteRepository) GetXmlRepositories(string tagsFilename, string notesFilename)
+        public static (ITagRepository tagRepository, INoteRepository noteRepository) GetXmlRepositories(string tagsFilename, string notesFilename)
         {
             var tagsRepoXml = new XmlRepository<Tag>(tagsFilename);
             var tagRepository = new TagRepository(tagsRepoXml);
