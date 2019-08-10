@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NoteBunny.BLL.Repositories
 {
-    public class TagRepository
+    public class TagRepository : ITagRepository
     {
         private IRepository<Tag> _tagRepo;
         public TagRepository(IRepository<Tag> tagRepo)
