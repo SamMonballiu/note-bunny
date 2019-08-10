@@ -79,6 +79,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Enumerations\NoteState.cs" />
+    <Compile Include="Helpers\RepositoryFactory.cs" />
     <Compile Include="Windows\NewNote.xaml.cs">
       <DependentUpon>NewNote.xaml</DependentUpon>
     </Compile>

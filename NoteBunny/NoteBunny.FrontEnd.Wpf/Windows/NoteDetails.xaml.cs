@@ -4,6 +4,7 @@ using NoteBunny.BLL.Repositories;
 using NoteBunny.DAL.Json.Models;
 using NoteBunny.DAL.Xml.Helpers;
 using NoteBunny.FrontEnd.Wpf.Enumerations;
+using NoteBunny.FrontEnd.Wpf.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace NoteBunny.FrontEnd.Wpf.Windows
             _state = state;
             btnDismiss.Content = _state == NoteState.Edit ? "Save" : "OK";
             txtContent.IsEnabled = _state == NoteState.Edit;
-            var repos = JsonHelpers.GetJsonRepositories("tags.json", "notes.json");
+            var repos = RepositoryFactory.GetJsonRepositories();
             noteRepository = repos.noteRepository;
             tagRepository = repos.tagRepository;
 

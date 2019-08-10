@@ -3,6 +3,7 @@ using NoteBunny.BLL.Models;
 using NoteBunny.BLL.Repositories;
 using NoteBunny.DAL.Json.Models;
 using NoteBunny.DAL.Xml.Helpers;
+using NoteBunny.FrontEnd.Wpf.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace NoteBunny.FrontEnd.Wpf.Windows
         public NewNote()
         {
             InitializeComponent();
-            var repos = JsonHelpers.GetJsonRepositories("tags.json", "notes.json");
+            var repos = RepositoryFactory.GetJsonRepositories();
             noteRepository = repos.noteRepository;
             tagRepository = repos.tagRepository;
         }

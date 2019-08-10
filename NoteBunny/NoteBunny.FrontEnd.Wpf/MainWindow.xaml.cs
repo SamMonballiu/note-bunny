@@ -1,5 +1,6 @@
 ﻿using NoteBunny.BLL.Interfaces;
 using NoteBunny.BLL.Models;
+using NoteBunny.FrontEnd.Wpf.Helpers;
 using NoteBunny.BLL.Repositories;
 using NoteBunny.DAL.Json.Models;
 using NoteBunny.DAL.Xml.Helpers;
@@ -35,7 +36,7 @@ namespace NoteBunny.FrontEnd.Wpf
         public MainWindow()
         {
             InitializeComponent();
-            var repos = JsonHelpers.GetJsonRepositories("tags.json", "notes.json");
+            var repos = RepositoryFactory.GetJsonRepositories();
             notesRepository = repos.noteRepository;
             tags = repos.tagRepository;
 
