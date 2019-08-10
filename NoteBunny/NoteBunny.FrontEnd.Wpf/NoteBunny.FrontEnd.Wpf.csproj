@@ -137,6 +137,10 @@
       <Project>{E7BE7919-C885-4234-924E-2DB7161A8402}</Project>
       <Name>NoteBunny.BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NoteBunny.DAL.Json\NoteBunny.DAL.Json.csproj">
+      <Project>{340EA75F-4F45-4E11-A99F-BBF2A8AB6571}</Project>
+      <Name>NoteBunny.DAL.Json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NoteBunny.DAL.Xml\NoteBunny.DAL.Xml.csproj">
       <Project>{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}</Project>
       <Name>NoteBunny.DAL.Xml</Name>

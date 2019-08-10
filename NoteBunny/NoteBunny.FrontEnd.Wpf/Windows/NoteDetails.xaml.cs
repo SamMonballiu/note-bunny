@@ -1,5 +1,7 @@
-﻿using NoteBunny.BLL.Models;
+﻿using NoteBunny.BLL.Interfaces;
+using NoteBunny.BLL.Models;
 using NoteBunny.BLL.Repositories;
+using NoteBunny.DAL.Json.Models;
 using NoteBunny.DAL.Xml.Helpers;
 using NoteBunny.FrontEnd.Wpf.Enumerations;
 using System;
@@ -25,8 +27,8 @@ namespace NoteBunny.FrontEnd.Wpf.Windows
     {
         private NoteState _state;
         private Note _note;
-        private NoteRepository noteRepository;
-        private TagRepository tagRepository;
+        private INoteRepository noteRepository;
+        private ITagRepository tagRepository;
         public NoteDetails(Note note, NoteState state = NoteState.View)
         {
             InitializeComponent();
@@ -37,7 +39,7 @@ namespace NoteBunny.FrontEnd.Wpf.Windows
             _state = state;
             btnDismiss.Content = _state == NoteState.Edit ? "Save" : "OK";
             txtContent.IsEnabled = _state == NoteState.Edit;
-            var repos = XmlHelpers.GetXmlRepositories("tags.xml", "notes.xml");
+            var repos = JsonHelpers.GetJsonRepositories("tags.json", "notes.json");
             noteRepository = repos.noteRepository;
             tagRepository = repos.tagRepository;
 

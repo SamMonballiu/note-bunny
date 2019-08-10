@@ -1,5 +1,7 @@
-﻿using NoteBunny.BLL.Models;
+﻿using NoteBunny.BLL.Interfaces;
+using NoteBunny.BLL.Models;
 using NoteBunny.BLL.Repositories;
+using NoteBunny.DAL.Json.Models;
 using NoteBunny.DAL.Xml.Helpers;
 using NoteBunny.FrontEnd.Wpf.Windows;
 using System;
@@ -25,15 +27,15 @@ namespace NoteBunny.FrontEnd.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        private NoteRepository notesRepository;
-        private TagRepository tags;
+        private INoteRepository notesRepository;
+        private ITagRepository tags;
 
         private ObservableCollection<Note> notesCollection = new ObservableCollection<Note>();
 
         public MainWindow()
         {
             InitializeComponent();
-            var repos = XmlHelpers.GetXmlRepositories("tags.xml", "notes.xml");
+            var repos = JsonHelpers.GetJsonRepositories("tags.json", "notes.json");
             notesRepository = repos.noteRepository;
             tags = repos.tagRepository;
 
