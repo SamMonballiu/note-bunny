@@ -49,6 +49,8 @@ namespace NoteBunny.FrontEnd.Wpf.Windows
 
             noteRepository.Add(note);
             noteRepository.Save();
+            MessageBox.Show("OK!");
+            this.Close();
         }
     }
 }

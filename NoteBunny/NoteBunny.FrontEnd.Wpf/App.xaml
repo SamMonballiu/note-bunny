@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:NoteBunny.FrontEnd.Wpf"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="Label" x:Key="SubjectHeader">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
     </Application.Resources>
 </Application>
