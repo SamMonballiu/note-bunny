@@ -12,6 +12,8 @@ namespace NoteBunny.BLL.Models
         public List<Tag> Tags { get; set; }
         public List<string> TagIds { get; set; }
 
+        public override string ToString() => $"{Subject} ({base.CreatedOn.ToShortDateString()})";
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var vr = new List<ValidationResult>();
