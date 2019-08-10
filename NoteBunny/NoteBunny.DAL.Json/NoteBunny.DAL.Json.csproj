@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{09B7C544-E493-482A-9E2A-C9BA8B055986}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>NoteBunny.ConsoleTest</RootNamespace>
-    <AssemblyName>NoteBunny.ConsoleTest</AssemblyName>
+    <ProjectGuid>{340EA75F-4F45-4E11-A99F-BBF2A8AB6571}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NoteBunny.DAL.Json</RootNamespace>
+    <AssemblyName>NoteBunny.DAL.Json</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,24 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Models\JsonHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\JsonRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NoteBunny.BLL\NoteBunny.BLL.csproj">
       <Project>{E7BE7919-C885-4234-924E-2DB7161A8402}</Project>
       <Name>NoteBunny.BLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NoteBunny.DAL.Json\NoteBunny.DAL.Json.csproj">
-      <Project>{340EA75F-4F45-4E11-A99F-BBF2A8AB6571}</Project>
-      <Name>NoteBunny.DAL.Json</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NoteBunny.DAL.Xml\NoteBunny.DAL.Xml.csproj">
-      <Project>{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}</Project>
-      <Name>NoteBunny.DAL.Xml</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

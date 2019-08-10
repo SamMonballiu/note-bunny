@@ -1,5 +1,6 @@
 ﻿using NoteBunny.BLL.Models;
 using NoteBunny.BLL.Repositories;
+using NoteBunny.DAL.Json.Models;
 using NoteBunny.DAL.Xml.Repositories;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ namespace NoteBunny.ConsoleTest
 
         private static void ShowNoteDetails()
         {
-            var repos = GetStandardRepositories();
+            var repos = JsonHelpers.GetJsonRepositories("tags.json", "notes.json");
             foreach (var note in repos.noteRepository.GetNotesWithTags())
             {
                 Console.WriteLine("[Content] " + note.Content);
@@ -94,24 +95,22 @@ namespace NoteBunny.ConsoleTest
 
         private static void ShowNewNoteMenu()
         {
-            var tagsRepoXml = new XmlRepository<Tag>("tags.xml");
-            var tagRepository = new TagRepository(tagsRepoXml);
-            var noteRepository = new XmlRepository<Note>("notes.xml");
+            var repos = JsonHelpers.GetJsonRepositories("tags.json", "notes.json");
 
             Console.WriteLine("[New note]");
             Console.Write("Content: ");
             var content = Console.ReadLine();
             Console.Write("Tags: ");
-            var tags = tagRepository.GetTagsFromString(Console.ReadLine());
+            var tags = repos.tagRepository.GetTagsFromString(Console.ReadLine());
 
             var note = new Note()
             {
                 Content = content,
-                TagIds = tagRepository.GetTagIdsFromNames(tags.Select(x => x.Name).ToList())
+                TagIds = repos.tagRepository.GetTagIdsFromNames(tags.Select(x => x.Name).ToList())
             };
 
-            noteRepository.Add(note);
-            noteRepository.Save();
+            repos.noteRepository.Add(note);
+            repos.noteRepository.Save();
         }
     }
 }

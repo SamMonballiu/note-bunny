@@ -143,9 +143,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="bunny.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="bunny.ico" />
   </ItemGroup>
   <ItemGroup>
