@@ -9,8 +9,8 @@ namespace NoteBunny.BLL.Interfaces
         IQueryable<T> GetAll();
         void Add(T record);
         void Update(T record);
-        void Delete(T record);
-        void Delete(Predicate<T> condition);
+        bool Delete(T record);
+        bool Delete(Predicate<T> condition);
         void First(Predicate<T> condition);
         T FindById(string id);
         void Save();

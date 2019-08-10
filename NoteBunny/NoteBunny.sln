@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBunny.BLL", "NoteBunny.BLL\NoteBunny.BLL.csproj", "{E7BE7919-C885-4234-924E-2DB7161A8402}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBunny.DAL.Xml", "NoteBunny.DAL.Xml\NoteBunny.DAL.Xml.csproj", "{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E7BE7919-C885-4234-924E-2DB7161A8402}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7BE7919-C885-4234-924E-2DB7161A8402}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7BE7919-C885-4234-924E-2DB7161A8402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
