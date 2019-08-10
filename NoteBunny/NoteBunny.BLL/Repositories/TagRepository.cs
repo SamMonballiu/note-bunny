@@ -23,13 +23,13 @@ namespace NoteBunny.BLL.Repositories
             }
 
             var existingTags = _tagRepo.GetAll();
-            var newTagCandidates = tagString.Split(',');
+            var newTagCandidates = tagString.Split(',').Select(t => t.Trim());
 
             foreach (var tag in newTagCandidates)
             {
                 if (!existingTags.Any(x => x.Name.ToLower() == tag.ToLower()))
                 {
-                    var newTag = new Tag(tag.Trim());
+                    var newTag = new Tag(tag);
                     _tagRepo.Add(newTag);
                 }
             }
@@ -75,6 +75,14 @@ namespace NoteBunny.BLL.Repositories
         {
             return _tagRepo.GetAll()
                 .Where(x => names.Contains(x.Name))
+                .Select(x => x.Id)
+                .ToList();
+        }
+
+        public List<string> GetTagIdsFromNames(string names)
+        {
+            return _tagRepo.GetAll()
+                .Where(x => names.Split(',').Select(p => p.Trim()).Contains(x.Name))
                 .Select(x => x.Id)
                 .ToList();
         }

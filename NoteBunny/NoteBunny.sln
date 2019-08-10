@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBunny.DAL.Xml", "NoteBu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBunny.ConsoleTest", "NoteBunny.ConsoleTest\NoteBunny.ConsoleTest.csproj", "{09B7C544-E493-482A-9E2A-C9BA8B055986}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBunny.FrontEnd.Wpf", "NoteBunny.FrontEnd.Wpf\NoteBunny.FrontEnd.Wpf.csproj", "{8E8C23A1-0EBF-4EF3-B3A5-F32D8482630C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{09B7C544-E493-482A-9E2A-C9BA8B055986}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09B7C544-E493-482A-9E2A-C9BA8B055986}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09B7C544-E493-482A-9E2A-C9BA8B055986}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E8C23A1-0EBF-4EF3-B3A5-F32D8482630C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E8C23A1-0EBF-4EF3-B3A5-F32D8482630C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E8C23A1-0EBF-4EF3-B3A5-F32D8482630C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E8C23A1-0EBF-4EF3-B3A5-F32D8482630C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
