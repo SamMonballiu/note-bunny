@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBunny.BLL", "NoteBunny.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBunny.DAL.Xml", "NoteBunny.DAL.Xml\NoteBunny.DAL.Xml.csproj", "{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBunny.ConsoleTest", "NoteBunny.ConsoleTest\NoteBunny.ConsoleTest.csproj", "{09B7C544-E493-482A-9E2A-C9BA8B055986}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09B7C544-E493-482A-9E2A-C9BA8B055986}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09B7C544-E493-482A-9E2A-C9BA8B055986}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09B7C544-E493-482A-9E2A-C9BA8B055986}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09B7C544-E493-482A-9E2A-C9BA8B055986}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
