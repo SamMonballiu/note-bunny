@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Serialization;
 
@@ -9,6 +10,7 @@ namespace NoteBunny.BLL.Models
         public string Subject { get; set; }
         public string Content { get; set; }
         [XmlIgnore]
+        [JsonIgnore]
         public List<Tag> Tags { get; set; }
         public List<string> TagIds { get; set; }
 
@@ -17,12 +19,10 @@ namespace NoteBunny.BLL.Models
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var vr = new List<ValidationResult>();
-
             if (string.IsNullOrEmpty(Content) || string.IsNullOrEmpty(Subject))
             {
                 vr.Add(new ValidationResult("String and content are required."));
             }
-
             return vr;
         }
     }
