@@ -1,8 +1,12 @@
-﻿namespace NoteBunny.BLL.Models
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+
+namespace NoteBunny.BLL.Models
 {
     public class Tag : BaseEntity
     {
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         public Tag(string name)
         {
@@ -10,6 +14,8 @@
         }
 
         public Tag() { }
+        [XmlIgnore,JsonIgnore]
+        public virtual IList<Note> Notes { get; set; }
         public override string ToString() => Name;
     }
 }

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBunny.FrontEnd.Wpf", "N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBunny.DAL.Json", "NoteBunny.DAL.Json\NoteBunny.DAL.Json.csproj", "{340EA75F-4F45-4E11-A99F-BBF2A8AB6571}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteBunny.DAL.NHibernate", "NoteBunny.DAL.NHibernate\NoteBunny.DAL.NHibernate.csproj", "{F635665A-72CC-4AEB-ABBE-9A7213DEDC70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{340EA75F-4F45-4E11-A99F-BBF2A8AB6571}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{340EA75F-4F45-4E11-A99F-BBF2A8AB6571}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{340EA75F-4F45-4E11-A99F-BBF2A8AB6571}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F635665A-72CC-4AEB-ABBE-9A7213DEDC70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F635665A-72CC-4AEB-ABBE-9A7213DEDC70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F635665A-72CC-4AEB-ABBE-9A7213DEDC70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F635665A-72CC-4AEB-ABBE-9A7213DEDC70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

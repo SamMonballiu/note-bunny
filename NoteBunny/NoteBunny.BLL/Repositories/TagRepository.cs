@@ -3,8 +3,6 @@ using NoteBunny.BLL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoteBunny.BLL.Repositories
 {
@@ -66,9 +64,9 @@ namespace NoteBunny.BLL.Repositories
 
         public List<Tag> GetTagsFromIds(List<string> ids)
         {
-            return _tagRepo.GetAll()
-                .Where(x => ids.Contains(x.Id))
-                .ToList();
+            return  ids is null 
+                ? _tagRepo.GetAll().Where(x => ids.Contains(x.Id)).ToList()
+                : new List<Tag>();
         }
 
         public List<string> GetTagIdsFromNames(List<string> names)

@@ -34,9 +34,14 @@ namespace NoteBunny.BLL.Repositories
             var enrichedNotes = new List<Note>();
             foreach (var note in notes)
             {
-                note.Tags = _tagRepo.GetTagsFromIds(note.TagIds);
+                note.Tags = _tagRepo.GetTagsFromIds(note.TagIds?.ToList());
             }
             return notes;
+        }
+
+        public IEnumerable<string> GetNoteSubjects()
+        {
+            return _noteRepo.GetAll().Select(p => p.Subject);
         }
 
     }

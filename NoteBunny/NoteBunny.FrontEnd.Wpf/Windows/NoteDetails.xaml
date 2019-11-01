@@ -20,7 +20,7 @@
         </StackPanel>
 
         <StackPanel x:Name="txtOnEdit">
-            <TextBox x:Name="txtContent" Text="{Binding Content, Mode=TwoWay}" TextWrapping="WrapWithOverflow" Margin="8" Height="260"/>
+            <TextBox x:Name="txtContent" AcceptsReturn="True" AcceptsTab="True" Text="{Binding Content, Mode=TwoWay}" TextWrapping="WrapWithOverflow" Margin="8" Height="260"/>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Tags: "/>
                 <TextBox x:Name="txtTagsEdit" Width="600"  FontWeight="Bold"/>

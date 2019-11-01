@@ -30,8 +30,19 @@ namespace NoteBunny.FrontEnd.Wpf
     {
         private INoteRepository notesRepository;
         private ITagRepository tags;
+        private static Random rnd = new Random();
+        private Sorter<Note, object> noteSorter = new NoteSorter<Note, object>();
 
         private ObservableCollection<Note> notesCollection = new ObservableCollection<Note>();
+
+        public enum SortingOptions
+        {
+            CreatedOn,
+            Subject,
+            Id
+        }
+
+        private SortingOptions selectedSortingOption = SortingOptions.CreatedOn;
 
         public MainWindow()
         {
@@ -40,23 +51,72 @@ namespace NoteBunny.FrontEnd.Wpf
             notesRepository = repos.noteRepository;
             tags = repos.tagRepository;
 
-            UpdateNotesList();
+            try
+            {
+                noteSorter.SetSorter(x => x.CreatedOn);
+                noteSorter.SortDirection = SortDirection.Descending;
+                UpdateNotesList(noteSorter.SorterFunc);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            txtSearchAlt.Focus();
+
+            cbxSortOptions.ItemsSource = Enum.GetNames(typeof(SortingOptions));
+        }
+
+        private void SetSortingOptions()
+        {
+            Func<Note, object> noteSortFunc = null;
+            switch (selectedSortingOption)
+            {
+                case SortingOptions.CreatedOn:
+                    noteSortFunc = x => x.CreatedOn;
+                    break;
+                case SortingOptions.Subject:
+                    noteSortFunc = x => x.Subject;
+                    break;
+                case SortingOptions.Id:
+                    noteSortFunc = x => x.Id;
+                    break;
+                default:
+                    break;
+            }
+            noteSorter.SetSorter(noteSortFunc);
+
+            switch (cbxSortAscending.IsChecked)
+            {
+                case true:
+                    noteSorter.SortDirection = SortDirection.Ascending;
+                    break;
+                case false:
+                    noteSorter.SortDirection = SortDirection.Descending;
+                    break;
+            }
         }
 
         #region EVENT HANDLERS 
+
+        private void CbxSortOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedSortingOption = (SortingOptions)(sender as ComboBox).SelectedIndex;
+            SetSortingOptions();
+            UpdateNotesList(noteSorter.SorterFunc);
+        }
         private void Btn_NewNote_Click(object sender, RoutedEventArgs e)
         {
             new NewNote().ShowDialog();
-            UpdateNotesList();
         }
         private void LstNotes_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ShowSelectedNote();
         }
-        private void BtnUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateNotesList();
-        }
+        //private void BtnUpdate_Click(object sender, RoutedEventArgs e)
+        //{
+        //    UpdateNotesList();
+        //}
         private void Btn_SearchTags_Click(object sender, RoutedEventArgs e)
         {
             DoSearch();
@@ -69,14 +129,15 @@ namespace NoteBunny.FrontEnd.Wpf
 
         private void Btn_DeleteNote_Click(object sender, RoutedEventArgs e)
         {
-            var note = GetSelectedNote();
-            if (note is null) return;
-            if (MessageBox.Show("Confirm", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
-            {
-                notesRepository.Delete(note);
-                notesRepository.Save();
-                UpdateNotesList();
-            }
+            throw new NotImplementedException();
+            //var note = GetSelectedNote();
+            //if (note is null) return;
+            //if (MessageBox.Show("Confirm", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            //{
+            //    notesRepository.Delete(note);
+            //    notesRepository.Save();
+            //    UpdateNotesList();
+            //}
         }
 
         private void TxtSearchTagName_TextChanged(object sender, TextChangedEventArgs e)
@@ -84,17 +145,6 @@ namespace NoteBunny.FrontEnd.Wpf
             var senderTxt = sender as TextBox;
             spTagSearchRequirements.IsEnabled = senderTxt.Text.Contains(',');
             if (senderTxt.Text == String.Empty && txtSearchNoteSubjectContent.Text == String.Empty) ClearSearchResults();
-        }
-
-        private void Btn_SearchNotes_Click(object sender, RoutedEventArgs e)
-        {
-            var searchText = txtSearchNoteSubjectContent.Text;
-            if (String.IsNullOrEmpty(searchText))
-            {
-                return;
-            }
-
-            lstNotes.ItemsSource = SearchNotes(notesRepository.GetAll(), searchText);
         }
 
         private void TxtSearchNoteSubjectContent_TextChanged(object sender, TextChangedEventArgs e)
@@ -130,86 +180,66 @@ namespace NoteBunny.FrontEnd.Wpf
         #region Methods
         private void ShowSelectedNote()
         {
-            new NoteDetails(GetSelectedNote()).ShowDialog();
-            UpdateNotesList();
+            throw new NotImplementedException();
+            //new NoteDetails(GetSelectedNote()).ShowDialog();
+            //UpdateNotesList();
         }
-        private Note GetSelectedNote() => (Note)lstNotes.SelectedItem;
-        private void UpdateNotesList()
+        private string GetSelectedSubject() => (string)lstNotes.SelectedItem;
+
+        private void UpdateNotesList<TKey>(Func<Note, TKey> sorter, IEnumerable<Note> notes = null)
         {
-            notesCollection.Clear();
-            foreach (var item in notesRepository.GetAll())
+            if (sorter is null)
             {
-                notesCollection.Add(item);
-            }
-            lstNotes.ItemsSource = null;
-            lstNotes.ItemsSource = notesCollection;
-        }
-        private void DoSearch()
-        {
-            if (String.IsNullOrWhiteSpace(txtSearchTagName.Text) && String.IsNullOrWhiteSpace(txtSearchNoteSubjectContent.Text))
-            {
+                //throw new ArgumentException("Must provide a sorter.");
                 return;
             }
 
-            var noteResults = new List<Note>();
-            // search by tags if required
-            if (!String.IsNullOrWhiteSpace(txtSearchTagName.Text))
-            {
-                var tagSearchTerms = txtSearchTagName.Text.Split(',').Select(p => p.Trim());
-                var tagResults = new List<Tag>();
+            notesCollection.Clear();
+            notes = notes ?? notesRepository.GetAll();
+            notes = noteSorter.Sort(notes);
 
-                foreach (var tag in tags.GetAll())
-                {
-                    foreach (var term in tagSearchTerms)
-                    {
-                        if (tag.Name.ToLower().Contains(term.ToLower()))
-                        {
-                            if (!tagResults.Contains(tag)) tagResults.Add(tag);
-                        }
-                    }
-                }
-                var ids = tagResults.Select(p => p.Id);
-                if (ids.Count() > 0)
-                {
-                    var notesMustHaveAllTags = (bool)radTagSearchAll.IsChecked;
+            lstNotes.ItemsSource = notes.Select(p => p.Subject);
 
-                    if (notesMustHaveAllTags)
-                    {
-                        foreach (var note in notesRepository.GetAll())
-                        {
-                            if (ids.All(id => note.TagIds.Contains(id)))
-                            {
-                                noteResults.Add(note);
-                            }
-                        }
-                    }
+            statusTxt.Text = $"Total notes: {notesRepository.GetAll().Count()} | Search results: {notes.Count()} | Tags: {tags.GetAll().Count()}";
 
-                    else
-                    {
-                        foreach (var note in notesRepository.GetAll())
-                        {
-                            if (ids.Any(id => note.TagIds.Contains(id)))
-                            {
-                                noteResults.Add(note);
-                            }
-                        }
-                    }
-                }
-            }
+            //notes = notes ?? notesRepository.GetAll();
 
+            //notesCollection.Clear();
 
-            if (!String.IsNullOrEmpty(txtSearchNoteSubjectContent.Text))
-            {
-                noteResults = SearchNotes(noteResults.Count == 0 ? notesRepository.GetAll().ToList() : noteResults, txtSearchNoteSubjectContent.Text).ToList();
-            }
-            lstNotes.ItemsSource = noteResults;
-            lblHeading.Content = $"All notes ({noteResults.Count})";
+            //Func<IEnumerable<Note>> sortByNameDescending = () => notes.OrderByDescending(x => x.Subject);
+            //Func<IEnumerable<Note>> sortByDateDescending = () => notes.OrderByDescending(x => x.CreatedOn);
+            //Func<IEnumerable<Note>> sortByIdDescending = () => notes.OrderByDescending(x => x.Id);
+
+            //Func<IEnumerable<Note>> sortByNameAscending = () => notes.OrderBy(x => x.Subject);
+            //Func<IEnumerable<Note>> sortByDateAscending = () => notes.OrderBy(x => x.CreatedOn);
+            //Func<IEnumerable<Note>> sortByIdAscending = () => notes.OrderBy(x => x.Id);
+
+            //Dictionary<(string, bool), Func<IEnumerable<Note>>> sortOptions = new Dictionary<(string, bool), Func<IEnumerable<Note>>>()
+            //{
+            //    { ("Name", true), sortByNameDescending },
+            //    { ("Created On", true),  sortByDateDescending },
+            //    { ("Id", true),  sortByIdDescending },
+            //    { ("Name", false), sortByNameAscending },
+            //    { ("Created On", false),  sortByDateAscending },
+            //    { ("Id", false),  sortByIdAscending },
+            //};
+
+            //var sortedNotes = sortOptions[(sortBy, (bool)cbxSortAscending.IsChecked)].Invoke();
+
+            //foreach (var item in sortedNotes)
+            //{
+            //    notesCollection.Add(item);
+            //}
+            //lstNotes.ItemsSource = null;
+            //lstNotes.ItemsSource = notesCollection.Select(n => n.Subject);
+            ////lblHeading.Content = $"All notes ({notesCollection.Count})";
+            //statusTxt.Text = $"Total notes: {notesRepository.GetAll().Count()} | Search results: {notesCollection.Count} | Tags: {tags.GetAll().Count()}";
         }
         private void ClearSearchResults()
         {
             txtSearchNoteSubjectContent.Text = String.Empty;
             txtSearchTagName.Text = String.Empty;
-            UpdateNotesList();
+            //UpdateNotesList();
             lblHeading.Content = "All notes";
         }
         private IEnumerable<Note> SearchNotes(IEnumerable<Note> notes, string searchTerm)
@@ -222,13 +252,124 @@ namespace NoteBunny.FrontEnd.Wpf
         }
         private void EditNote()
         {
-            var note = GetSelectedNote();
-            ClearSearchResults();
-            new NoteDetails(note, Enumerations.NoteState.Edit).ShowDialog();
-            UpdateNotesList();
+            throw new NotImplementedException();
+            //var note = GetSelectedNote();
+            //ClearSearchResults();
+            //new NoteDetails(note, Enumerations.NoteState.Edit).ShowDialog();
+            //UpdateNotesList();
         }
+
         #endregion
 
-        
+        private void LstNotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (GetSelectedSubject() is string subject)
+            {
+                var note = notesRepository.First(x => x.Subject == subject);
+                spSelected.DataContext = note;
+                txtOnView.Visibility = String.IsNullOrWhiteSpace(note.Content) ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+        private void DoSearch()
+        {
+            if (txtSearchAlt.Text.Length < 3)
+            {
+                if (String.IsNullOrWhiteSpace(txtSearchAlt.Text))
+                {
+                    //TODO Update
+                    //UpdateNotesList();
+                }
+                return;
+            }
+
+            var noteResults = new List<Note>();
+            var tagSearchTerms = txtSearchAlt.Text.Split(',').Select(p => p.Trim());
+            var tagResults = new List<Tag>();
+
+            foreach (var tag in tags.GetAll())
+            {
+                foreach (var term in tagSearchTerms)
+                {
+                    if (tag.Name.ToLower().Contains(term.ToLower()))
+                    {
+                        if (!tagResults.Contains(tag)) tagResults.Add(tag);
+                    }
+                }
+            }
+            var ids = tagResults.Select(p => p.Id);
+            if (ids.Count() > 0)
+            {
+                var notesMustHaveAllTags = (bool)radTagSearchAll.IsChecked;
+
+                if (notesMustHaveAllTags)
+                {
+                    foreach (var note in notesRepository.GetAll())
+                    {
+                        if (ids.All(id => note.TagIds.Contains(id)))
+                        {
+                            noteResults.Add(note);
+                        }
+                    }
+                }
+
+                else
+                {
+                    foreach (var note in notesRepository.GetAll())
+                    {
+                        if (ids.Any(id => note.TagIds.Contains(id)))
+                        {
+                            noteResults.Add(note);
+                        }
+                    }
+                }
+            }
+
+
+            List<Note> contentSearchResults = new List<Note>();
+            if (!txtSearchAlt.Text.Contains(','))
+            {
+                contentSearchResults = SearchNotes(notesRepository.GetAll().ToList(), txtSearchAlt.Text).ToList();
+            }
+
+            foreach (var item in contentSearchResults)
+            {
+                if (!noteResults.Any(x => x.Id == item.Id))
+                {
+                    noteResults.Add(item);
+                }
+            }
+
+            //TODO Update
+            //UpdateNotesList(noteResults, cbxSortOptions.Text);
+
+            //lstNotes.ItemsSource = noteResults;
+            //lblHeading.Content = $"All notes ({noteResults.Count})";
+        }
+
+        private void TxtSearchAlt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtSearchAlt.Text.Length == 0)
+            {
+                //TODO Update
+                //UpdateNotesList();
+            }
+        }
+
+        private void TxtSearchAlt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return || e.Key == Key.Enter)
+            {
+                DoSearch();
+            }
+        }
+
+        private void BtnSort_Click(object sender, RoutedEventArgs e)
+        {
+            noteSorter.SortDirection = (bool)(sender as CheckBox).IsChecked
+                ? SortDirection.Ascending
+                : SortDirection.Descending;
+            UpdateNotesList(noteSorter.SorterFunc);
+        }
+
     }
 }

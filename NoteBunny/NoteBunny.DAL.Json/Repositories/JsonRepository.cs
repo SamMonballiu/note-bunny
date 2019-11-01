@@ -23,9 +23,16 @@ namespace NoteBunny.DAL.Json.Repositories
 
         private List<T> GetItems()
         {
-            if (System.IO.File.Exists(_filename))
+            try
             {
-                return JsonConvert.DeserializeObject<List<T>>(System.IO.File.ReadAllText(_filename));
+                if (System.IO.File.Exists(_filename))
+                {
+                    return JsonConvert.DeserializeObject<List<T>>(System.IO.File.ReadAllText(_filename));
+                }
+            }
+            catch (Exception)
+            {
+                return new List<T>();
             }
 
             return new List<T>();

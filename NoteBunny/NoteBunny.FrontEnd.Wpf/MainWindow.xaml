@@ -6,42 +6,84 @@
         xmlns:local="clr-namespace:NoteBunny.FrontEnd.Wpf"
         mc:Ignorable="d"
         KeyDown="Window_KeyDown"
-        Title="NoteBunny" SizeToContent="Height" Width="800" Background="#eee">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width=".5*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Margin="10">
-            <Label x:Name="lblHeading" Style="{StaticResource AppHeader}">All notes</Label>
-            <ListBox x:Name="lstNotes" MinHeight="360" MouseDoubleClick="LstNotes_MouseDoubleClick"/>
+        Title="NoteBunny" SizeToContent="Height" MinHeight="400" Width="1000" MinWidth="900" Background="#eee"
+        ResizeMode="CanMinimize">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" >
+            <StackPanel Orientation="Horizontal" Margin="8 0">
+                <TextBox MinWidth="400" Margin="0 12 0 0" DockPanel.Dock="Left" Name="txtSearchAlt" KeyDown="TxtSearchAlt_KeyDown" TextChanged="TxtSearchAlt_TextChanged"/>
+                <StackPanel Orientation="Horizontal" Margin="0 12 0 0">
+                    <Label>Tags:</Label>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="12 0 0 0">
+                        <RadioButton GroupName="TagSearchAnyOrAll" Margin="0 0 12 0" IsChecked="True" x:Name="radTagSearchAny" Content="Any"/>
+                        <RadioButton GroupName="TagSearchAnyOrAll" Margin="0 0 12 0" x:Name="radTagSearchAll" Content="All"/>
+                    </StackPanel>
+                </StackPanel>
 
-            <Grid>
+            </StackPanel>
+            <Grid Margin="12">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0"/>
+                    <ColumnDefinition Width="1.4*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="btn_NewNote" Margin="6" Click="Btn_NewNote_Click">New note</Button>
-                <Button Grid.Column="1" x:Name="btn_EditNote" Margin="6" Click="Btn_EditNote_Click">_Edit note</Button>
-                <Button Grid.Column="2" x:Name="btn_DeleteNote" Margin="6" Click="Btn_DeleteNote_Click">Delete note</Button>
-                <Button Grid.Column="3" x:Name="btn_ClearSearchResults" Margin="6" Click="Btn_ClearSearchResults_Click">Clear search</Button>
-            </Grid>
-        </StackPanel>
-        <StackPanel Grid.Column="1" Margin="10" HorizontalAlignment="Left">
-            <Label Style="{StaticResource AppHeader}">Search</Label>
+                <StackPanel Grid.Column="0" Margin="10">
+                    <Label Visibility="Collapsed" x:Name="lblHeading" Style="{StaticResource AppHeader}">All notes</Label>
+                    <ListBox x:Name="lstNotes" FontSize="12" MinHeight="360" MaxHeight="360" MouseDoubleClick="LstNotes_MouseDoubleClick" SelectionChanged="LstNotes_SelectionChanged"/>
+
+
+                    <Grid Visibility="Visible">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" x:Name="btn_NewNote" Margin="6" Click="Btn_NewNote_Click">_New</Button>
+                        <Button Grid.Column="1" x:Name="btn_EditNote" Margin="6" Click="Btn_EditNote_Click">_Edit</Button>
+                        <Button Grid.Column="2" x:Name="btn_DeleteNote" Margin="6" Click="Btn_DeleteNote_Click">Delete</Button>
+                        <Button Grid.Column="2" Visibility="Collapsed" x:Name="btn_ClearSearchResults" Margin="6" Click="Btn_DeleteNote_Click">Delete</Button>
+                    </Grid>
+
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 12 0 0">
+                        <Label>Sort:</Label>
+                        <ComboBox x:Name="cbxSortOptions" Width="120" SelectedIndex="0" SelectionChanged="CbxSortOptions_SelectionChanged"/>
+                        <CheckBox x:Name="cbxSortAscending" Margin="4 8 0 0" IsChecked="True" Checked="BtnSort_Click" Unchecked="BtnSort_Click"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="10" HorizontalAlignment="Left" Visibility="Collapsed">
+                    <Label Style="{StaticResource AppHeader}">Search</Label>
                     <Label>Subject or content:</Label>
                     <TextBox x:Name="txtSearchNoteSubjectContent" Width="220" TextChanged="TxtSearchNoteSubjectContent_TextChanged"/>
 
                     <Label>Tags:</Label>
                     <TextBox x:Name="txtSearchTagName" Width="220" TextChanged="TxtSearchTagName_TextChanged"/>
                     <StackPanel Orientation="Horizontal" Margin="0 12 0 0" x:Name="spTagSearchRequirements" IsEnabled="False">
-                        <RadioButton GroupName="TagSearchAnyOrAll" Margin="0 0 12 0" IsChecked="True" x:Name="radTagSearchAny" Content="Any"/>
-                        <RadioButton GroupName="TagSearchAnyOrAll" Margin="0 0 12 0" x:Name="radTagSearchAll" Content="All"/>
+                        <!--<RadioButton GroupName="TagSearchAnyOrAll" Margin="0 0 12 0" IsChecked="True" x:Name="radTagSearchAny" Content="Any"/>
+                <RadioButton GroupName="TagSearchAnyOrAll" Margin="0 0 12 0" x:Name="radTagSearchAll" Content="All"/>-->
                     </StackPanel>
                     <Button x:Name="btn_Search" Margin="0 12 0 0" Click="Btn_SearchTags_Click">Search</Button>
 
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" x:Name="spSelected" Margin="10">
+                    <TextBlock x:Name="lblSubject" TextWrapping="WrapWithOverflow" Text="{Binding Subject}" Style="{StaticResource SubjectHeader}"/>
+                    <Label x:Name="txtDetails" Content="{Binding Details}" Style="{StaticResource DetailLine}"/>
+                    <StackPanel x:Name="txtOnView">
+                        <DockPanel Margin="8 0 22 0">
+                            <TextBlock VerticalAlignment="Center"  Width="20" Text="{Binding ElementName=txtContent, Path=FontSize, FallbackValue=--}"/>
+                            <Slider Maximum="64" Minimum="12" TickFrequency="2" IsSnapToTickEnabled="True" TickPlacement="TopLeft" Value="{Binding ElementName=txtContent, Path=FontSize}" />
+                        </DockPanel>
+                        <ScrollViewer MaxHeight="360" MinHeight="200">
+                            <TextBox x:Name="txtContent" Text="{Binding Content}" TextWrapping="WrapWithOverflow" FontSize="12" Margin="8" Padding="4"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
         </StackPanel>
-    </Grid>
+        <StatusBar DockPanel.Dock="Top" x:Name="status" Height="24" Background="#ddd">
+            <TextBlock x:Name="statusTxt" TextAlignment="Right" HorizontalAlignment="Right"/>
+        </StatusBar>
+    </DockPanel>
 </Window>

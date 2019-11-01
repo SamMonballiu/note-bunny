@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NoteBunny.FrontEnd.Wpf.Windows"
         mc:Ignorable="d"
-        Title="New Note" SizeToContent="Height" Width="500">
+        Title="New Note" SizeToContent="Height" Width="500" Background="#ddd">
     <StackPanel Margin="40 20">
         <StackPanel Orientation="Horizontal"></StackPanel>
         <StackPanel Orientation="Horizontal">

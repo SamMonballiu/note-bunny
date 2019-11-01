@@ -33,8 +33,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Iesi.Collections.4.0.4\lib\net461\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=5.2.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.5.2.5\lib\net461\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq.EagerFetching, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.EagerFetching.2.2.0\lib\net45\Remotion.Linq.EagerFetching.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NoteBunny.BLL\NoteBunny.BLL.csproj">
@@ -58,9 +77,17 @@
       <Project>{340EA75F-4F45-4E11-A99F-BBF2A8AB6571}</Project>
       <Name>NoteBunny.DAL.Json</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NoteBunny.DAL.NHibernate\NoteBunny.DAL.NHibernate.csproj">
+      <Project>{F635665A-72CC-4AEB-ABBE-9A7213DEDC70}</Project>
+      <Name>NoteBunny.DAL.NHibernate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NoteBunny.DAL.Xml\NoteBunny.DAL.Xml.csproj">
       <Project>{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}</Project>
       <Name>NoteBunny.DAL.Xml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NoteBunny.FrontEnd.Wpf\NoteBunny.FrontEnd.Wpf.csproj">
+      <Project>{8E8C23A1-0EBF-4EF3-B3A5-F32D8482630C}</Project>
+      <Name>NoteBunny.FrontEnd.Wpf</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -34,6 +34,7 @@ namespace NoteBunny.FrontEnd.Wpf.Windows
             var repos = RepositoryFactory.GetJsonRepositories();
             noteRepository = repos.noteRepository;
             tagRepository = repos.tagRepository;
+            txtSubject.Focus();
         }
 
         private void BtnSaveNewNote_Click(object sender, RoutedEventArgs e)

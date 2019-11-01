@@ -48,7 +48,7 @@ namespace NoteBunny.FrontEnd.Wpf.Windows
             txtOnEdit.Focusable = _state == NoteState.Edit ? true : false;
             txtOnView.Visibility = _state == NoteState.View ? Visibility.Visible : Visibility.Collapsed;
             txtOnView.Focusable = _state == NoteState.View ? true : false;
-            txtTagsEdit.Text = String.Join(", ", tagRepository.GetTagsFromIds(note.TagIds).Select(p => p.Name));
+            txtTagsEdit.Text = String.Join(", ", tagRepository.GetTagsFromIds(note.TagIds.ToList()).Select(p => p.Name));
 
             this.Title = $"{_state}: {note.Subject} ({note.CreatedOn.ToShortDateString()})";
         }
