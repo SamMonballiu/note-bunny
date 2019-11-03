@@ -64,9 +64,9 @@ namespace NoteBunny.BLL.Repositories
 
         public List<Tag> GetTagsFromIds(List<string> ids)
         {
-            return  ids is null 
-                ? _tagRepo.GetAll().Where(x => ids.Contains(x.Id)).ToList()
-                : new List<Tag>();
+            return ids is null
+                ? new List<Tag>()
+                : _tagRepo.GetAll().Where(x => ids.Contains(x.Id)).ToList();
         }
 
         public List<string> GetTagIdsFromNames(List<string> names)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+// TODO Separate these into their own files
 namespace NoteBunny.FrontEnd.Wpf.Helpers
 {
     public abstract class Sorter<T, TKey>
@@ -23,10 +24,9 @@ namespace NoteBunny.FrontEnd.Wpf.Helpers
                 case SortDirection.Descending:
                     return collection.OrderByDescending(SorterFunc);
                 default:
-                    throw new ArgumentException("Unsupported Sort Direction: " + SortDirection);
+                    return collection;
             }
         }
-        
     }
 
     public class NoteSorter<Note, TKey> : Sorter<Note, TKey>

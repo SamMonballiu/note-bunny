@@ -22,9 +22,10 @@ namespace NoteBunny.BLL.Repositories
         public void Add(Note record) => _noteRepo.Add(record);
         public bool Delete(Note record) => _noteRepo.Delete(record);
         public bool Delete(Predicate<Note> condition) => _noteRepo.Delete(condition);
-        public Note FindById(string id) => _noteRepo.FindById(id);
+        public Note FindById(string id) => GetNoteWithTags(_noteRepo.FindById(id));
         public Note First(Predicate<Note> condition) => _noteRepo.First(condition);
-        public IQueryable<Note> GetAll() => GetNotesWithTags().AsQueryable();
+        //public IQueryable<Note> GetAll() => GetNotesWithTags().AsQueryable();
+        public IQueryable<Note> GetAll() => _noteRepo.GetAll();
         public void Save() => _noteRepo.Save();
         public void Update(Note record) => _noteRepo.Update(record);
 
@@ -39,10 +40,15 @@ namespace NoteBunny.BLL.Repositories
             return notes;
         }
 
+        public Note GetNoteWithTags(Note note)
+        {
+            note.Tags = _tagRepo.GetTagsFromIds(note.TagIds?.ToList());
+            return note;
+        }
+
         public IEnumerable<string> GetNoteSubjects()
         {
             return _noteRepo.GetAll().Select(p => p.Subject);
         }
-
     }
 }

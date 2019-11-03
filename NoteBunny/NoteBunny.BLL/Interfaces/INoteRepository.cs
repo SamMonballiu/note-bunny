@@ -14,6 +14,7 @@ namespace NoteBunny.BLL.Interfaces
         Note First(Predicate<Note> condition);
         IQueryable<Note> GetAll();
         IEnumerable<Note> GetNotesWithTags();
+        Note GetNoteWithTags(Note note);
         void Save();
         void Update(Note record);
     }

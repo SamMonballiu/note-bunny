@@ -10,17 +10,7 @@
         ResizeMode="CanMinimize">
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" >
-            <StackPanel Orientation="Horizontal" Margin="8 0">
-                <TextBox MinWidth="400" Margin="0 12 0 0" DockPanel.Dock="Left" Name="txtSearchAlt" KeyDown="TxtSearchAlt_KeyDown" TextChanged="TxtSearchAlt_TextChanged"/>
-                <StackPanel Orientation="Horizontal" Margin="0 12 0 0">
-                    <Label>Tags:</Label>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="12 0 0 0">
-                        <RadioButton GroupName="TagSearchAnyOrAll" Margin="0 0 12 0" IsChecked="True" x:Name="radTagSearchAny" Content="Any"/>
-                        <RadioButton GroupName="TagSearchAnyOrAll" Margin="0 0 12 0" x:Name="radTagSearchAll" Content="All"/>
-                    </StackPanel>
-                </StackPanel>
 
-            </StackPanel>
             <Grid Margin="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.8*"/>
@@ -30,6 +20,8 @@
                 <StackPanel Grid.Column="0" Margin="10">
                     <Label Visibility="Collapsed" x:Name="lblHeading" Style="{StaticResource AppHeader}">All notes</Label>
                     <ListBox x:Name="lstNotes" FontSize="12" MinHeight="360" MaxHeight="360" MouseDoubleClick="LstNotes_MouseDoubleClick" SelectionChanged="LstNotes_SelectionChanged"/>
+
+                    <TextBox MinWidth="{Binding ElementName=lstNotes, Path=ActualWidth}" Margin="0 12 0 0" DockPanel.Dock="Left" Name="txtSearchAlt" Height="24" KeyDown="TxtSearchAlt_KeyDown" TextChanged="TxtSearchAlt_TextChanged"/>
 
 
                     <Grid Visibility="Visible">
@@ -45,10 +37,10 @@
                     </Grid>
 
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 12 0 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 0">
                         <Label>Sort:</Label>
                         <ComboBox x:Name="cbxSortOptions" Width="120" SelectedIndex="0" SelectionChanged="CbxSortOptions_SelectionChanged"/>
-                        <CheckBox x:Name="cbxSortAscending" Margin="4 8 0 0" IsChecked="True" Checked="BtnSort_Click" Unchecked="BtnSort_Click"/>
+                        <ComboBox x:Name="cbxSortDirection" Margin="10 0 0 0" Width="120" SelectedIndex="0" SelectionChanged="CbxSortOptions_SelectionChanged"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="10" HorizontalAlignment="Left" Visibility="Collapsed">
@@ -67,8 +59,10 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" x:Name="spSelected" Margin="10">
-                    <TextBlock x:Name="lblSubject" TextWrapping="WrapWithOverflow" Text="{Binding Subject}" Style="{StaticResource SubjectHeader}"/>
-                    <Label x:Name="txtDetails" Content="{Binding Details}" Style="{StaticResource DetailLine}"/>
+                    <Viewbox Height="48" HorizontalAlignment="Left">
+                        <TextBlock x:Name="lblSubject" TextWrapping="WrapWithOverflow" Text="{Binding Subject}" Style="{StaticResource SubjectHeader}"/>
+                    </Viewbox>
+                    <Label x:Name="txtDetails" Content="{Binding Details}" Style="{StaticResource DetailLine}" Height="32"/>
                     <StackPanel x:Name="txtOnView">
                         <DockPanel Margin="8 0 22 0">
                             <TextBlock VerticalAlignment="Center"  Width="20" Text="{Binding ElementName=txtContent, Path=FontSize, FallbackValue=--}"/>
