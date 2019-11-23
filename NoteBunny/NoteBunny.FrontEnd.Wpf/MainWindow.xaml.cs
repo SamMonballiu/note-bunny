@@ -215,6 +215,11 @@ namespace NoteBunny.FrontEnd.Wpf
             lstNotes.DisplayMemberPath = "Subject";
             lstNotes.SelectedValuePath = "Id";
 
+            if (lstNotes.Items.Count == 1)
+            {
+                lstNotes.SelectedIndex = 0; 
+            }
+
             UpdateStatusBarText();
         }
 
