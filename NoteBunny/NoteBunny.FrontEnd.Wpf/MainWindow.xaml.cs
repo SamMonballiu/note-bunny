@@ -66,6 +66,8 @@ namespace NoteBunny.FrontEnd.Wpf
 
             cbxSortOptions.ItemsSource = Enum.GetNames(typeof(SortingOptions));
             cbxSortDirection.ItemsSource = Enum.GetNames(typeof(SortDirection));
+            cbxSortOptions.SelectionChanged += CbxSortOptions_SelectionChanged;
+            cbxSortDirection.SelectionChanged += CbxSortOptions_SelectionChanged;
         }
 
         private void GenerateRandomNotes(int amount)
@@ -240,11 +242,10 @@ namespace NoteBunny.FrontEnd.Wpf
         }
         private void EditNote()
         {
-            throw new NotImplementedException();
-            //var note = GetSelectedNote();
-            //ClearSearchResults();
-            //new NoteDetails(note, Enumerations.NoteState.Edit).ShowDialog();
-            //UpdateNotesList();
+            var note = GetSelectedNote();
+            ClearSearchResults();
+            new NoteDetails(note, Enumerations.NoteState.Edit).ShowDialog();
+            UpdateNotesList();
         }
 
         #endregion
