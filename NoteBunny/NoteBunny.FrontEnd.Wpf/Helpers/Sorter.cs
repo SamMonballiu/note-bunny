@@ -17,6 +17,11 @@ namespace NoteBunny.FrontEnd.Wpf.Helpers
 
         public IEnumerable<T> Sort(IEnumerable<T> collection)
         {
+            if (SorterFunc is null)
+            {
+                return collection;
+            }
+
             switch (SortDirection)
             {
                 case SortDirection.Ascending:

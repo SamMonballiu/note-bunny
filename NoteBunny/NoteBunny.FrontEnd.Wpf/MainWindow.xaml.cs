@@ -1,26 +1,15 @@
 ﻿using NoteBunny.BLL.Interfaces;
 using NoteBunny.BLL.Models;
 using NoteBunny.FrontEnd.Wpf.Helpers;
-using NoteBunny.BLL.Repositories;
-using NoteBunny.DAL.Json.Models;
-using NoteBunny.DAL.Xml.Helpers;
 using NoteBunny.FrontEnd.Wpf.Windows;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Diagnostics;
 
 namespace NoteBunny.FrontEnd.Wpf
 {
@@ -34,7 +23,7 @@ namespace NoteBunny.FrontEnd.Wpf
         private static Random rnd = new Random();
         private Sorter<Note, object> noteSorter = new NoteSorter<Note, object>();
 
-        public enum SortingOptions
+        public enum NoteSortingOptions
         {
             CreatedOn,
             Subject,
@@ -42,7 +31,7 @@ namespace NoteBunny.FrontEnd.Wpf
             NumberOfTags
         }
 
-        private SortingOptions selectedSortingOption = SortingOptions.CreatedOn;
+        private NoteSortingOptions selectedSortingOption = NoteSortingOptions.CreatedOn;
 
         public MainWindow()
         {
@@ -54,7 +43,7 @@ namespace NoteBunny.FrontEnd.Wpf
             try
             {
                 noteSorter.SetSorter(x => x.CreatedOn);
-                noteSorter.SortDirection = SortDirection.Descending;
+                noteSorter.SortDirection = SortDirection.Ascending;
                 UpdateNotesList();
             }
             catch (Exception ex)
@@ -64,10 +53,12 @@ namespace NoteBunny.FrontEnd.Wpf
 
             txtSearchAlt.Focus();
 
-            cbxSortOptions.ItemsSource = Enum.GetNames(typeof(SortingOptions));
+            cbxSortOptions.ItemsSource = Enum.GetNames(typeof(NoteSortingOptions));
             cbxSortDirection.ItemsSource = Enum.GetNames(typeof(SortDirection));
             cbxSortOptions.SelectionChanged += CbxSortOptions_SelectionChanged;
             cbxSortDirection.SelectionChanged += CbxSortOptions_SelectionChanged;
+
+            OpenTagsWindow();
         }
 
         private void GenerateRandomNotes(int amount)
@@ -99,13 +90,13 @@ namespace NoteBunny.FrontEnd.Wpf
             Func<Note, object> noteSortFunc = null;
             switch (selectedSortingOption)
             {
-                case SortingOptions.CreatedOn:
+                case NoteSortingOptions.CreatedOn:
                     noteSortFunc = x => x.CreatedOn;
                     break;
-                case SortingOptions.Subject:
+                case NoteSortingOptions.Subject:
                     noteSortFunc = x => x.Subject;
                     break;
-                case SortingOptions.Id:
+                case NoteSortingOptions.Id:
                     noteSortFunc = x => x.Id;
                     break;
                 default:
@@ -121,7 +112,7 @@ namespace NoteBunny.FrontEnd.Wpf
 
         private void CbxSortOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            selectedSortingOption = (SortingOptions)(sender as ComboBox).SelectedIndex;
+            selectedSortingOption = (NoteSortingOptions)(sender as ComboBox).SelectedIndex;
             SetSortingOptions();
             UpdateNotesList();
         }
@@ -243,6 +234,7 @@ namespace NoteBunny.FrontEnd.Wpf
         private void EditNote()
         {
             var note = GetSelectedNote();
+            if (note is null) return;
             ClearSearchResults();
             new NoteDetails(note, Enumerations.NoteState.Edit).ShowDialog();
             UpdateNotesList();
@@ -260,7 +252,7 @@ namespace NoteBunny.FrontEnd.Wpf
                 : Visibility.Visible;
         }
 
-        private void DoSearch()
+        public void DoSearch()
         {
             if (txtSearchAlt.Text.Length < 3)
             {
@@ -346,5 +338,17 @@ namespace NoteBunny.FrontEnd.Wpf
             UpdateNotesList();
         }
 
+        private void Menu_Tags_Click(object sender, RoutedEventArgs e)
+        {
+            OpenTagsWindow();
+        }
+
+        private void OpenTagsWindow()
+        {
+            var tags = new TagWindow(this);
+            tags.Top = 0;
+            tags.Left = 0;
+            tags.Show();
+        }
     }
 }

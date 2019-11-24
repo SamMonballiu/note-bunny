@@ -9,6 +9,11 @@
         Title="NoteBunny" SizeToContent="Height" MinHeight="400" Width="1000" MinWidth="900" Background="#eee"
         ResizeMode="CanMinimize">
     <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem x:Name="menu_Tags" Header="_Tags" Click="Menu_Tags_Click"/>
+            </MenuItem>
+        </Menu>
         <StackPanel DockPanel.Dock="Top" >
 
             <Grid Margin="12">
@@ -19,29 +24,34 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="10">
                     <Label Visibility="Collapsed" x:Name="lblHeading" Style="{StaticResource AppHeader}">All notes</Label>
+                    <TextBox MinWidth="{Binding ElementName=lstNotes, Path=ActualWidth}" Margin="0 0 0 12" DockPanel.Dock="Left" Name="txtSearchAlt" Height="24" KeyDown="TxtSearchAlt_KeyDown" TextChanged="TxtSearchAlt_TextChanged"/>
                     <ListBox x:Name="lstNotes" FontSize="12" MinHeight="360" MaxHeight="360" MouseDoubleClick="LstNotes_MouseDoubleClick" SelectionChanged="LstNotes_SelectionChanged"/>
 
-                    <TextBox MinWidth="{Binding ElementName=lstNotes, Path=ActualWidth}" Margin="0 12 0 0" DockPanel.Dock="Left" Name="txtSearchAlt" Height="24" KeyDown="TxtSearchAlt_KeyDown" TextChanged="TxtSearchAlt_TextChanged"/>
 
 
-                    <Grid Visibility="Visible">
+                    <StackPanel Margin="0 8">
+                        <Grid Visibility="Visible">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" x:Name="btn_NewNote" Padding="4" Margin="0 0 4 0" Click="Btn_NewNote_Click">_New</Button>
+                            <Button Grid.Column="1" x:Name="btn_EditNote" Padding="4" Margin="4 0 4 0" Click="Btn_EditNote_Click">_Edit</Button>
+                            <Button Grid.Column="2" x:Name="btn_DeleteNote" Padding="4" Margin="4 0 0 0" Click="Btn_DeleteNote_Click">Delete</Button>
+                            <Button Grid.Column="2" Visibility="Collapsed" x:Name="btn_ClearSearchResults" Margin="6" Click="Btn_DeleteNote_Click">Delete</Button>
+                        </Grid>
+                    </StackPanel>
+
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition/>
+
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" x:Name="btn_NewNote" Margin="6" Click="Btn_NewNote_Click">_New</Button>
-                        <Button Grid.Column="1" x:Name="btn_EditNote" Margin="6" Click="Btn_EditNote_Click">_Edit</Button>
-                        <Button Grid.Column="2" x:Name="btn_DeleteNote" Margin="6" Click="Btn_DeleteNote_Click">Delete</Button>
-                        <Button Grid.Column="2" Visibility="Collapsed" x:Name="btn_ClearSearchResults" Margin="6" Click="Btn_DeleteNote_Click">Delete</Button>
+                        <ComboBox Grid.Column="0" x:Name="cbxSortOptions" Margin="0 0 4 0" SelectedIndex="0"/>
+                        <ComboBox Grid.Column="1" x:Name="cbxSortDirection" Margin="4 0 0 0" SelectedIndex="0" />
                     </Grid>
-
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 0">
-                        <Label>Sort:</Label>
-                        <ComboBox x:Name="cbxSortOptions" Width="120" SelectedIndex="0"/>
-                        <ComboBox x:Name="cbxSortDirection" Margin="10 0 0 0" Width="120" SelectedIndex="0" />
-                    </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="10" HorizontalAlignment="Left" Visibility="Collapsed">
                     <Label Style="{StaticResource AppHeader}">Search</Label>
