@@ -49,6 +49,7 @@
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\ToDoItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\INoteRepository.cs" />
     <Compile Include="Interfaces\ITagRepository.cs" />
