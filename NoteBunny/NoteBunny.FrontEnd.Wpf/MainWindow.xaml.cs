@@ -22,6 +22,7 @@ namespace NoteBunny.FrontEnd.Wpf
         private ITagRepository tags;
         private static Random rnd = new Random();
         private Sorter<Note, object> noteSorter = new NoteSorter<Note, object>();
+        private TagWindow tagWindow;
 
         public enum NoteSortingOptions
         {
@@ -59,6 +60,13 @@ namespace NoteBunny.FrontEnd.Wpf
             cbxSortDirection.SelectionChanged += CbxSortOptions_SelectionChanged;
 
             OpenTagsWindow();
+
+            this.Closing += CloseChildWindowsOnClosing;
+        }
+
+        private void CloseChildWindowsOnClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            tagWindow?.Close();
         }
 
         private void GenerateRandomNotes(int amount)
@@ -345,10 +353,10 @@ namespace NoteBunny.FrontEnd.Wpf
 
         private void OpenTagsWindow()
         {
-            var tags = new TagWindow(this);
-            tags.Top = 0;
-            tags.Left = 0;
-            tags.Show();
+            tagWindow = new TagWindow(this);
+            tagWindow.Top = 0;
+            tagWindow.Left = 0;
+            tagWindow.Show();
         }
     }
 }
