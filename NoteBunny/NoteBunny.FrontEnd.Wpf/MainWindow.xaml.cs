@@ -44,7 +44,7 @@ namespace NoteBunny.FrontEnd.Wpf
             try
             {
                 noteSorter.SetSorter(x => x.CreatedOn);
-                noteSorter.SortDirection = SortDirection.Ascending;
+                noteSorter.SortDirection = SortDirection.Descending;
                 UpdateNotesList();
             }
             catch (Exception ex)

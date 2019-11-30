@@ -32,13 +32,16 @@ namespace NoteBunny.FrontEnd.Wpf.Windows
             var repos = RepositoryFactory.GetJsonRepositories();
             var mapper = new TagMapper();
             tags = mapper.Map(repos.tagRepository.GetAll().AsEnumerable(), repos.noteRepository.GetAll().AsEnumerable());
-            UpdateTagsList();
 
-            tagSorter.SetSorter(x => x.Name);
-            tagSorter.SortDirection = SortDirection.Ascending;
+            tagSorter.SetSorter(x => x.Uses);
+            tagSorter.SortDirection = SortDirection.Descending;
+
+            UpdateTagsList();
 
             cbxSortOptions.ItemsSource = Enum.GetNames(typeof(TagSortOptions));
             cbxSortDirection.ItemsSource = Enum.GetNames(typeof(SortDirection));
+
+            cbxSortOptions.SelectedIndex = cbxSortDirection.SelectedIndex = 1;
 
             cbxSortDirection.SelectionChanged += SortingOptions_SelectionChanged;
             cbxSortOptions.SelectionChanged += SortingOptions_SelectionChanged;
