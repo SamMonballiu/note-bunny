@@ -3,8 +3,6 @@ using NoteBunny.BLL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoteBunny.BLL.Repositories
 {
@@ -29,6 +27,12 @@ namespace NoteBunny.BLL.Repositories
         public void Save() => _noteRepo.Save();
         public void Update(Note record) => _noteRepo.Update(record);
 
+        public void TogglePinned(Note note)
+        {
+            note.IsPinned = !note.IsPinned;
+            _noteRepo.Update(note);
+            _noteRepo.Save();
+        }
         public IEnumerable<Note> GetNotesWithTags()
         {
             var notes = _noteRepo.GetAll();

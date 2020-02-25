@@ -17,5 +17,6 @@ namespace NoteBunny.BLL.Interfaces
         Note GetNoteWithTags(Note note);
         void Save();
         void Update(Note record);
+        void TogglePinned(Note note);
     }
 }

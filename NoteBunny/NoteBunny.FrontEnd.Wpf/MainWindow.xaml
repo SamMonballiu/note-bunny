@@ -11,7 +11,11 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
+                <MenuItem x:Name="menu_Quit" Header="E_xit"/>
+            </MenuItem>
+            <MenuItem Header="_Window">
                 <MenuItem x:Name="menu_Tags" Header="_Tags" Click="Menu_Tags_Click"/>
+                <MenuItem x:Name="menu_ToDo" Header="To _do" Click="Menu_ToDo_Click"/>
             </MenuItem>
         </Menu>
         <StackPanel DockPanel.Dock="Top" >
@@ -35,22 +39,25 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0" x:Name="btn_NewNote" Padding="4" Margin="0 0 4 0" Click="Btn_NewNote_Click">_New</Button>
                             <Button Grid.Column="1" x:Name="btn_EditNote" Padding="4" Margin="4 0 4 0" Click="Btn_EditNote_Click">_Edit</Button>
-                            <Button Grid.Column="2" x:Name="btn_DeleteNote" Padding="4" Margin="4 0 0 0" Click="Btn_DeleteNote_Click">Delete</Button>
-                            <Button Grid.Column="2" Visibility="Collapsed" x:Name="btn_ClearSearchResults" Margin="6" Click="Btn_DeleteNote_Click">Delete</Button>
+                            <Button Grid.Column="2" x:Name="btn_DeleteNote" Padding="4" Margin="4 0 4 0" Click="Btn_DeleteNote_Click">Delete</Button>
+                            <Button Grid.Column="3" x:Name="btn_PinNote" Padding="4" Margin="4 0 0 0" Click="Btn_PinNote_Click" >Pin</Button>
+                            <Button Grid.Column="4" Visibility="Collapsed" x:Name="btn_ClearSearchResults" Margin="6" Click="Btn_DeleteNote_Click">Delete</Button>
                         </Grid>
                     </StackPanel>
 
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width=".75*"/>
                         </Grid.ColumnDefinitions>
                         <ComboBox Grid.Column="0" x:Name="cbxSortOptions" Margin="0 0 4 0" SelectedIndex="0"/>
                         <ComboBox Grid.Column="1" x:Name="cbxSortDirection" Margin="4 0 0 0" SelectedIndex="0" />
+                        <CheckBox Grid.Column="2" x:Name="chkOnlyPinned" VerticalAlignment="Center" Margin="6 0 0 0" Unchecked="ChkOnlyPinned_Checked" Checked="ChkOnlyPinned_Checked">Only pinned</CheckBox>
                     </Grid>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="10" HorizontalAlignment="Left" Visibility="Collapsed">

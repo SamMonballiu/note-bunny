@@ -18,11 +18,13 @@ namespace NoteBunny.FrontEnd.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        private INoteRepository notesRepository;
-        private ITagRepository tags;
         private static Random rnd = new Random();
+        private INoteRepository _notesRepository;
+        private ITagRepository _tags;
         private Sorter<Note, object> noteSorter = new NoteSorter<Note, object>();
-        private TagWindow tagWindow;
+        private TagWindow _tagWindow;
+        private ToDoWindow _toDoWindow;
+        private bool _onlyPinned = false;
 
         public enum NoteSortingOptions
         {
@@ -38,8 +40,8 @@ namespace NoteBunny.FrontEnd.Wpf
         {
             InitializeComponent();
             var repos = RepositoryFactory.GetJsonRepositories();
-            notesRepository = repos.noteRepository;
-            tags = repos.tagRepository;
+            _notesRepository = repos.noteRepository;
+            _tags = repos.tagRepository;
 
             try
             {
@@ -64,11 +66,6 @@ namespace NoteBunny.FrontEnd.Wpf
             this.Closing += CloseChildWindowsOnClosing;
         }
 
-        private void CloseChildWindowsOnClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            tagWindow?.Close();
-        }
-
         private void GenerateRandomNotes(int amount)
         {
             for (int i = 0; i < amount; i++)
@@ -88,9 +85,9 @@ namespace NoteBunny.FrontEnd.Wpf
                     TagIds = new List<string>() { "b98fc232-043e-469e-aa27-0e9f69e2cd94" }
                 };
 
-                notesRepository.Add(note);
+                _notesRepository.Add(note);
             }
-            notesRepository.Save();
+            _notesRepository.Save();
         }
 
         private void SetSortingOptions()
@@ -150,8 +147,8 @@ namespace NoteBunny.FrontEnd.Wpf
             if (note is null) return;
             if (MessageBox.Show("Confirm", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
-                notesRepository.Delete(note);
-                notesRepository.Save();
+                _notesRepository.Delete(note);
+                _notesRepository.Save();
                 UpdateNotesList();
             }
         }
@@ -199,7 +196,7 @@ namespace NoteBunny.FrontEnd.Wpf
             new NoteDetails(GetSelectedNote()).ShowDialog();
             UpdateNotesList();
         }
-        private Note GetSelectedNote() => lstNotes.SelectedItem is null ? null : notesRepository.FindById((string)lstNotes.SelectedValue);
+        private Note GetSelectedNote() => lstNotes.SelectedItem is null ? null : _notesRepository.FindById((string)lstNotes.SelectedValue);
 
         private void UpdateNotesList(IEnumerable<Note> notes = null)
         {
@@ -209,8 +206,13 @@ namespace NoteBunny.FrontEnd.Wpf
                 return;
             }
 
-            notes = notes ?? notesRepository.GetAll();
+            notes = notes ?? _notesRepository.GetAll();
             notes = noteSorter.Sort(notes);
+
+            if (_onlyPinned)
+            {
+                notes = notes.Where(n => n.IsPinned);
+            }
 
             lstNotes.ItemsSource = notes.Select(p => new { p.Subject, p.Id });
             lstNotes.DisplayMemberPath = "Subject";
@@ -226,7 +228,7 @@ namespace NoteBunny.FrontEnd.Wpf
 
         private void UpdateStatusBarText(string additionalText = null)
         {
-            statusTxt.Text = $"Total notes: {notesRepository.GetAll().Count()} | Search results: {lstNotes.Items.Count} | Tags: {tags.GetAll().Count()} | ";
+            statusTxt.Text = $"Total notes: {_notesRepository.GetAll().Count()} | Search results: {lstNotes.Items.Count} | Tags: {_tags.GetAll().Count()} | ";
             if (additionalText != null)
             {
                 statusTxt.Text += additionalText;
@@ -258,6 +260,19 @@ namespace NoteBunny.FrontEnd.Wpf
             txtOnView.Visibility = String.IsNullOrWhiteSpace(note.Content)
                 ? Visibility.Collapsed
                 : Visibility.Visible;
+
+            SetPinButtonText();
+        }
+
+        private void SetPinButtonText()
+        {
+            var selectedNote = GetSelectedNote();
+            if (selectedNote is null)
+                return;
+
+            btn_PinNote.Content = selectedNote.IsPinned
+                ? "Unpin"
+                : "Pin";
         }
 
         public void DoSearch()
@@ -278,14 +293,14 @@ namespace NoteBunny.FrontEnd.Wpf
             var searchTerm = txtSearchAlt.Text.ToLower();
 
             var tagSearchTerms = searchTerm.Split(',').Select(p => p.Trim());
-            var allNotes = notesRepository.GetAll();
+            var allNotes = _notesRepository.GetAll();
 
             var noteSubjects = allNotes.ToDictionary(n => n.Subject.ToLower(), n => n.Id);
             var noteContents = allNotes.Select(n => new { n.Content, n.Id });
             var notesTagIds = allNotes.ToDictionary(n => n.TagIds, n => n.Id);
             var notesById = allNotes.ToDictionary(n => n.Id, n => n);
 
-            var allTags = tags.GetAll();
+            var allTags = _tags.GetAll();
             var tagNames = allTags.ToDictionary(t => t.Name.ToLower(), p => p.Id);
             var tagsById = allTags.ToDictionary(t => t.Id, t => t);
 
@@ -353,10 +368,50 @@ namespace NoteBunny.FrontEnd.Wpf
 
         private void OpenTagsWindow()
         {
-            tagWindow = new TagWindow(this);
-            tagWindow.Top = 0;
-            tagWindow.Left = 0;
-            tagWindow.Show();
+            if (_tagWindow != null)
+                return;
+            
+            _tagWindow = new TagWindow(this);
+            _tagWindow.Top = 0;
+            _tagWindow.Left = 0;
+            _tagWindow.Show();
+        }
+
+        private void Menu_ToDo_Click(object sender, RoutedEventArgs e)
+        {
+            _toDoWindow = new ToDoWindow();
+            _toDoWindow.Show();
+        }
+
+
+        private void CloseChildWindowsOnClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _tagWindow?.Close();
+            _toDoWindow?.Close();
+        }
+
+        private void ChkOnlyPinned_Checked(object sender, RoutedEventArgs e)
+        {
+            _onlyPinned = !_onlyPinned;
+            if (!string.IsNullOrWhiteSpace(txtSearchAlt.Text))
+            {
+                DoSearch();
+            }
+            else UpdateNotesList();
+        }
+
+        private void Btn_PinNote_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedNote = GetSelectedNote();
+            if (selectedNote is null)
+                return;
+
+            _notesRepository.TogglePinned(selectedNote);
+            if (!string.IsNullOrWhiteSpace(txtSearchAlt.Text)) 
+            {
+                DoSearch();
+            }
+            else UpdateNotesList();
         }
     }
 }

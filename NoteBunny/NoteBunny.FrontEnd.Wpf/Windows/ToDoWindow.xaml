@@ -1,0 +1,38 @@
+﻿<Window x:Class="NoteBunny.FrontEnd.Wpf.Windows.ToDoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NoteBunny.FrontEnd.Wpf.Windows"
+        mc:Ignorable="d"
+        Title="To do" SizeToContent="Height" ResizeMode="NoResize" MinHeight="400" Width="460" Background="#eee">
+    <StackPanel Margin="8">
+        <ListBox x:Name="lstTodo" Height="400">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <CheckBox Grid.Column="0" IsEnabled="false" IsChecked="{Binding Path=IsFinished, Mode=OneWay}"></CheckBox>
+                        <TextBlock Grid.Column="1" Text="{Binding Path=Content}" FontSize="14"/>
+                        <Button x:Name="btn_FinishItem" Grid.Column="2" Content="Finish" IsEnabled="{Binding Path=!IsFinished, Mode=OneWay}" Click="Btn_FinishItem_Click"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+
+        <Grid Margin="0 8 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ComboBox Margin="0 0 4 0" Grid.Column="0" x:Name="cbxSortOptions" SelectedIndex="0" />
+            <ComboBox Margin="4 0 0 0" Grid.Column="1" x:Name="cbxSortDirection" SelectedIndex="0" />
+        </Grid>
+    </StackPanel>
+</Window>
