@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using NoteBunny.BLL.Interfaces;
 using NoteBunny.BLL.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoteBunny.DAL.Json.Repositories
 {
@@ -71,6 +70,7 @@ namespace NoteBunny.DAL.Json.Repositories
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Formatting = Formatting.Indented;
+                serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 serializer.Serialize(file, _items);
             }
         }
