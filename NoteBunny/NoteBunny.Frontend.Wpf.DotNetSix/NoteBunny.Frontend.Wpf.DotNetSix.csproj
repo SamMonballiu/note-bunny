@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="MainWindow.xaml.cs~RF132a70d.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NoteBunny.BLL\NoteBunny.BLL.csproj" />
+    <ProjectReference Include="..\NoteBunny.DAL.Json\NoteBunny.DAL.Json.csproj" />
+    <ProjectReference Include="..\NoteBunny.DAL.NHibernate\NoteBunny.DAL.NHibernate.csproj" />
+    <ProjectReference Include="..\NoteBunny.DAL.Xml\NoteBunny.DAL.Xml.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Windows\NewNote.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\NoteDetails.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\TagWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

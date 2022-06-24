@@ -5,7 +5,7 @@ using NoteBunny.DAL.NHibernate;
 using NoteBunny.DAL.NHibernate.Models;
 using NoteBunny.DAL.NHibernate.Repositories;
 using NoteBunny.DAL.Xml.Repositories;
-using NoteBunny.FrontEnd.Wpf.Helpers;
+using NoteBunny.Frontend.Wpf.DotNetSix.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

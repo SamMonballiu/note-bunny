@@ -85,9 +85,9 @@
       <Project>{A8FB11E2-F5B5-4981-8A50-23BD4CEA025C}</Project>
       <Name>NoteBunny.DAL.Xml</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NoteBunny.FrontEnd.Wpf\NoteBunny.FrontEnd.Wpf.csproj">
-      <Project>{8E8C23A1-0EBF-4EF3-B3A5-F32D8482630C}</Project>
-      <Name>NoteBunny.FrontEnd.Wpf</Name>
+    <ProjectReference Include="..\NoteBunny.Frontend.Wpf.DotNetSix\NoteBunny.Frontend.Wpf.DotNetSix.csproj">
+      <Project>{aa12b308-1969-49cc-8b97-b10ba7a5c6fb}</Project>
+      <Name>NoteBunny.Frontend.Wpf.DotNetSix</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
