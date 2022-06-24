@@ -3,12 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix" xmlns:viewmodels="clr-namespace:NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        xmlns:vc="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix.ValueConverters"
+        xmlns:local="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix" 
+        xmlns:viewmodels="clr-namespace:NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" 
         SizeToContent="Height" MinHeight="500" Width="1000" MinWidth="900" Background="#eee"
         ResizeMode="CanMinimize"
         >
+    <Window.Resources>
+        <vc:IsPinnedToTextValueConverter x:Key="pinnedConverter" />
+    </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -38,9 +44,24 @@
                         MinHeight="360" 
                         MaxHeight="360" 
                         SelectionChanged="LstNotes_SelectionChanged"
-                        DisplayMemberPath="Subject"
                         SelectedValuePath="Id"
-                    />
+                    >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Subject}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsPinned}" Value="True">
+                                                    <Setter Property="FontWeight" Value="Bold" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
 
                     <Grid Margin="0 8">
                         <Grid.ColumnDefinitions>
@@ -52,14 +73,14 @@
                         <ComboBox Grid.Column="1" x:Name="cbxSortDirection" Margin="4 0 0 0" SelectedIndex="0" />
                     </Grid>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Grid Visibility="Visible">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <Grid Visibility="Visible" VerticalAlignment="Center" Width="{Binding ElementName=lstNotes, Path=ActualWidth}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" x:Name="btn_NewNote" Padding="4" Margin="0 0 4 0" Click="Btn_NewNote_Click">_New</Button>
+                            <CheckBox Grid.Column="0" IsChecked="{Binding OnlyPinned}" Content="Only pinned" VerticalAlignment="Center"/>
+                            <Button Grid.Column="1" x:Name="btn_NewNote" Padding="4" Margin="0 0 4 0" Click="Btn_NewNote_Click">_New</Button>
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -74,25 +95,32 @@
                             <TextBlock VerticalAlignment="Center"  Width="20" Text="{Binding ElementName=txtContent, Path=FontSize, FallbackValue=--}"/>
                             <Slider Maximum="64" Minimum="12" TickFrequency="2" IsSnapToTickEnabled="True" TickPlacement="TopLeft" Value="{Binding ElementName=txtContent, Path=FontSize}" />
                         </DockPanel>
-                        <ScrollViewer MaxHeight="360" MinHeight="200" Margin="0 12 0 0">
-                            <StackPanel>
-                                <Border BorderBrush="DarkGray" BorderThickness="1">
-                                    <TextBlock 
-                                        x:Name="txtContent" 
-                                        MinHeight="200"
-                                        Text="{Binding Content}" 
-                                        Style="{StaticResource NoteContent}" 
-                                        TextWrapping="WrapWithOverflow" 
-                                        FontSize="12" 
-                                        Padding="12"
-                                        />
-                                </Border>
-                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 8 0 0">
-                                    <Button x:Name="btn_EditNote" Padding="4" Margin="4 0 4 0" Click="Btn_EditNote_Click">_Edit</Button>
-                                    <Button x:Name="btn_DeleteNote" Padding="4" Margin="4 0 0 0" Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.OnDeleteSelectedNote}">Delete</Button>
+                        <Border BorderBrush="DarkGray" BorderThickness="1" Margin="0 12 0 0">
+                            <ScrollViewer MaxHeight="360" MinHeight="200" Margin="0 0 0 0">
+                                <StackPanel>
+                                        <TextBlock 
+                                            x:Name="txtContent" 
+                                            MinHeight="360"
+                                            Text="{Binding Content}" 
+                                            Style="{StaticResource NoteContent}" 
+                                            TextWrapping="WrapWithOverflow" 
+                                            FontSize="12" 
+                                            Padding="12"
+                                            />
                                 </StackPanel>
-                            </StackPanel>
-                        </ScrollViewer>
+                            </ScrollViewer>
+                        </Border>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 8 0 0">
+                            <Button 
+                                        Padding="4" 
+                                        Margin="4 0 4 0" 
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.OnToggleNotePinned}" 
+                                        CommandParameter="{Binding}"
+                                        Content="{Binding Path=IsPinned, Converter={StaticResource pinnedConverter}}"
+                                     />
+                            <Button x:Name="btn_EditNote" Padding="4" Margin="4 0 4 0" Click="Btn_EditNote_Click">_Edit</Button>
+                            <Button x:Name="btn_DeleteNote" Padding="4" Margin="4 0 0 0" Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.OnDeleteSelectedNote}">Delete</Button>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </Grid>

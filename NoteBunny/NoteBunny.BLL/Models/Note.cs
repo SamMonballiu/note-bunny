@@ -15,6 +15,7 @@ namespace NoteBunny.BLL.Models
         [JsonIgnore]
         public virtual IList<Tag> Tags { get; set; }
         public virtual IList<string> TagIds { get; set; }
+        public bool? IsPinned { get; set; }
 
         public override string ToString() => Subject.First().ToString().ToUpper() + Subject.Substring(1);
 

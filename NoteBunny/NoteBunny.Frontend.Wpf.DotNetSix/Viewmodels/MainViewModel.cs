@@ -24,10 +24,13 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
         private ObservableCollection<Note> _notes;
 
         public List<NoteViewModel> NoteModels
-            => _noteSorter.Sort(_notes).Select(x => new NoteViewModel(x.Subject, x.Id)).ToList();
+            => _noteSorter.Sort(_onlyPinned ? _notes.Where(x => x.IsPinned == true) : _notes).Select(NoteViewModel.FromNote).ToList();
 
         [ObservableProperty]
         private string _searchTerm = string.Empty;
+
+        [ObservableProperty, AlsoNotifyChangeFor(nameof(NoteModels))]
+        private bool _onlyPinned = false;
 
         public RelayCommand OnGetData { get; init; }
         public RelayCommand OnSearch { get; init; }
@@ -35,6 +38,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
         public RelayCommand<NoteSortOptions> OnSetSortProperty { get; init; }
         public RelayCommand<SortDirection> OnSetSortDirection { get; init; }
         public RelayCommand OnDeleteSelectedNote { get; init; }
+        public RelayCommand<Note> OnToggleNotePinned { get; init; }
 
         public MainViewModel(INoteRepository noteRepository)
         {
@@ -47,6 +51,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
             OnSetSortDirection = new RelayCommand<SortDirection>(SetSortDirection);
             OnDeleteSelectedNote = new RelayCommand(DeleteSelectedNote);
             OnGetData = new RelayCommand(GetData);
+            OnToggleNotePinned = new RelayCommand<Note>(ToggleNotePinned);
         }
 
         private void GetData()
@@ -76,10 +81,12 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
                 { NoteSortOptions.CreatedOn, x => x.CreatedOn },
                 { NoteSortOptions.Subject, x => x.Subject },
                 { NoteSortOptions.NumberOfTags, x => x.Tags.Count },
-                { NoteSortOptions.Id, x => x.Id }
+                { NoteSortOptions.Id, x => x.Id },
+                { NoteSortOptions.Pinned, x => x.IsPinned ?? false }
             };
 
             _noteSorter.SetSortFunc(sortPropertyMap[sortProperty]);
+            OnPropertyChanged(nameof(NoteModels));
         }
 
         private void SetSortDirection(SortDirection sortDirection)
@@ -99,6 +106,15 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
                 _notes.Remove(note);
                 OnPropertyChanged(nameof(NoteModels));
             }
+        }
+
+        private void ToggleNotePinned(Note note)
+        {
+            if (note is null) return;
+            note.IsPinned = !note.IsPinned;
+            _noteRepository.Update(note);
+            OnPropertyChanged(nameof(NoteModels));
+            _noteRepository.Save();
         }
     }
 }

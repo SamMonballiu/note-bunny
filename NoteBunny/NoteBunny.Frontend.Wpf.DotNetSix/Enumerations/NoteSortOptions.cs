@@ -5,6 +5,7 @@
         CreatedOn,
         Subject,
         Id,
-        NumberOfTags
+        NumberOfTags,
+        Pinned
     }
 }
