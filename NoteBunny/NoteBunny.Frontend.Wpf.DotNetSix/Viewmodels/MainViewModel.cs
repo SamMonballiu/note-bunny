@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using NoteBunny.BLL.Enums;
 using NoteBunny.BLL.Helpers;
 using NoteBunny.BLL.Interfaces;
 using NoteBunny.BLL.Models;
@@ -32,6 +33,28 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
         [ObservableProperty, AlsoNotifyChangeFor(nameof(NoteModels))]
         private bool _onlyPinned = false;
 
+        //[ObservableProperty, AlsoNotifyChangeFor(nameof(IsNotFilterAll))]
+        //private NoteFilterType _filterOn = NoteFilterType.All;
+
+        private NoteFilterType _filterOn = NoteFilterType.All;
+        public NoteFilterType FilterOn
+        {
+            get => _filterOn;
+            set {
+                SetProperty(ref _filterOn, value);
+                if (value == NoteFilterType.All)
+                {
+                    SetProperty(ref _match, MatchType.Any);
+                }
+                OnPropertyChanged(nameof(IsNotFilterAll));
+            }
+        }
+
+        public bool IsNotFilterAll => !FilterOn.Equals(NoteFilterType.All);
+
+        [ObservableProperty]
+        private MatchType _match = MatchType.Any;
+        
         public RelayCommand OnGetData { get; init; }
         public RelayCommand OnSearch { get; init; }
         public RelayCommand<string> OnSetSelectedNote { get; init; }
@@ -65,7 +88,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
         {
             _notes = string.IsNullOrWhiteSpace(SearchTerm)
                 ? _noteRepository.GetNotesWithTags().ToObservableCollection()
-                : NoteFilter.BySearchTerm(_notes.ToList(), SearchTerm).ToObservableCollection();
+                : NoteFilter.BySearchTerm(_cachedNotes.ToList(), SearchTerm, _filterOn, _match).ToObservableCollection();
             OnPropertyChanged(nameof(NoteModels));
         }
 

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using NoteBunny.BLL.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-// TODO Separate these into their own files
 namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Helpers
 {
     public class Sorter<T, TKey>

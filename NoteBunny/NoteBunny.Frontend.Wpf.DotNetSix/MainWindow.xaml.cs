@@ -7,6 +7,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using NoteBunny.BLL.Enums;
 
 namespace NoteBunny.Frontend.Wpf.DotNetSix
 {
@@ -24,11 +25,11 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
 
             txtSearchAlt.Focus();
 
-            cbxSortOptions.ItemsSource = Enum.GetNames(typeof(NoteSortOptions));
-            cbxSortDirection.ItemsSource = Enum.GetNames(typeof(SortDirection));
-            cbxSortDirection.SelectedIndex = (int)SortDirection.Descending;
+            //cbxSortOptions.ItemsSource = Enum.GetNames(typeof(NoteSortOptions));
+            //cbxSortDirection.ItemsSource = Enum.GetNames(typeof(SortDirection));
+            //cbxSortDirection.SelectedIndex = (int)SortDirection.Descending;
             cbxSortOptions.SelectionChanged += CbxSortOptions_SelectionChanged;
-            cbxSortDirection.SelectionChanged += CbxSortDirection_SelectionChanged; ;
+            cbxSortDirection.SelectionChanged += CbxSortDirection_SelectionChanged;
 
             OpenTagsWindow();
 

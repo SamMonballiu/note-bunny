@@ -1,4 +1,5 @@
-﻿using NoteBunny.BLL.Models;
+﻿using NoteBunny.BLL.Enums;
+using NoteBunny.BLL.Models;
 
 namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Helpers
 {

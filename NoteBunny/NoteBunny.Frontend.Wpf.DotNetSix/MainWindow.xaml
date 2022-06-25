@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vc="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix.ValueConverters"
         xmlns:local="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix" 
+        xmlns:extend="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix.Extensions"
         xmlns:viewmodels="clr-namespace:NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels" 
+        xmlns:enums="clr-namespace:NoteBunny.BLL.Enums;assembly=NoteBunny.BLL"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" 
@@ -37,6 +39,35 @@
                         Height="24" 
                         KeyDown="TxtSearchAlt_KeyDown"
                         Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Grid VerticalAlignment="Center" Margin="0 0 0 8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <DockPanel Grid.Column="0">
+                            <Label DockPanel.Dock="Left">Search: </Label>
+                            <ComboBox DockPanel.Dock="Left" x:Name="cbxSearchType" 
+                                      ItemsSource="{Binding Source={extend:EnumBindingSource {x:Type enums:NoteFilterType}}}"
+                                      SelectedValue="{Binding FilterOn}"/>
+                        </DockPanel>
+                        <DockPanel Grid.Column="1">
+                            <Label DockPanel.Dock="Left">Match:</Label>
+                            <ComboBox DockPanel.Dock="Left" x:Name="cbxMatchType" 
+                                      IsEnabled="{Binding IsNotFilterAll}"
+                                      ItemsSource="{Binding Source={extend:EnumBindingSource {x:Type enums:MatchType}}}"
+                                      SelectedValue="{Binding Match}">
+                                <ComboBox.Style>
+                                    <Style TargetType="ComboBox">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Opacity" Value="0.5" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+                            </ComboBox>
+                        </DockPanel>
+                    </Grid>
                     <ListBox 
                         x:Name="lstNotes" 
                         ItemsSource="{Binding NoteModels}" 
@@ -69,8 +100,16 @@
 
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox Grid.Column="0" x:Name="cbxSortOptions" Margin="0 0 4 0" SelectedIndex="0" SelectionChanged="CbxSortOptions_SelectionChanged"/>
-                        <ComboBox Grid.Column="1" x:Name="cbxSortDirection" Margin="4 0 0 0" SelectedIndex="0" />
+                        <ComboBox Grid.Column="0" 
+                                  x:Name="cbxSortOptions" 
+                                  Margin="0 0 4 0" 
+                                  ItemsSource="{Binding Source={extend:EnumBindingSource {x:Type enums:NoteSortOptions}}}"
+                                  SelectedIndex="0" />
+                        <ComboBox Grid.Column="1" 
+                                  x:Name="cbxSortDirection" 
+                                  Margin="4 0 0 0"
+                                  ItemsSource="{Binding Source={extend:EnumBindingSource {x:Type enums:SortDirection}}}"
+                                  SelectedIndex="1" />
                     </Grid>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
@@ -79,7 +118,7 @@
                                 <ColumnDefinition Width="1.5*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" IsChecked="{Binding OnlyPinned}" Content="Only pinned" VerticalAlignment="Center"/>
+                            <CheckBox Grid.Column="0" IsChecked="{Binding OnlyPinned}" Content="Only show pinned" VerticalAlignment="Center"/>
                             <Button Grid.Column="1" x:Name="btn_NewNote" Padding="4" Margin="0 0 4 0" Click="Btn_NewNote_Click">_New</Button>
                         </Grid>
                     </StackPanel>
