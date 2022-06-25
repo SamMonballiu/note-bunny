@@ -1,9 +1,9 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using NoteBunny.BLL.Helpers;
 using NoteBunny.BLL.Interfaces;
 using NoteBunny.BLL.Models;
 using NoteBunny.Frontend.Wpf.DotNetSix.ExtensionMethods;
-using NoteBunny.Frontend.Wpf.DotNetSix.Helpers;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Context;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Helpers;
 using System;
@@ -18,7 +18,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
     {
         private readonly INoteRepository _noteRepository;
         private List<Note> _cachedNotes;
-        private Sorter<Note, object> _noteSorter = NoteSorter.Default;
+        private readonly Sorter<Note, object> _noteSorter = NoteSorter.Default;
 
         [ObservableProperty, AlsoNotifyChangeFor(nameof(NoteModels))]
         private ObservableCollection<Note> _notes;

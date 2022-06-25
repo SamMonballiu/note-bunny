@@ -18,8 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\NoteBunny.BLL\NoteBunny.BLL.csproj" />
     <ProjectReference Include="..\NoteBunny.DAL.Json\NoteBunny.DAL.Json.csproj" />
-    <ProjectReference Include="..\NoteBunny.DAL.NHibernate\NoteBunny.DAL.NHibernate.csproj" />
-    <ProjectReference Include="..\NoteBunny.DAL.Xml\NoteBunny.DAL.Xml.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -79,8 +79,9 @@ namespace NoteBunny.BLL.Repositories
 
         public List<string> GetTagIdsFromNames(string names)
         {
+            var splitNames = names.Split(',');
             return _tagRepo.GetAll()
-                .Where(x => names.Split(',').Select(p => p.Trim()).Contains(x.Name))
+                .Where(x => splitNames.Select(p => p.Trim()).Contains(x.Name))
                 .Select(x => x.Id)
                 .ToList();
         }

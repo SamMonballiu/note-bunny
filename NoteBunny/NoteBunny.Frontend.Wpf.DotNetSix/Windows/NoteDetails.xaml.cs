@@ -1,23 +1,11 @@
 ﻿using NoteBunny.BLL.Interfaces;
 using NoteBunny.BLL.Models;
-using NoteBunny.BLL.Repositories;
-using NoteBunny.DAL.Json.Models;
-using NoteBunny.DAL.Xml.Helpers;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Enumerations;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Windows
 {
