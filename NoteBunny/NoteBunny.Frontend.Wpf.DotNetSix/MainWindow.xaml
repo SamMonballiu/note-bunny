@@ -54,7 +54,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <DockPanel Grid.Column="0">
-                            <Label DockPanel.Dock="Left">Search: </Label>
+                            <Label DockPanel.Dock="Left">Search:</Label>
                             <ComboBox DockPanel.Dock="Left" x:Name="cbxSearchType" 
                                       ItemsSource="{Binding Source={extend:EnumBindingSource {x:Type enums:NoteFilterType}}}"
                                       SelectedValue="{Binding FilterOn}"/>
@@ -150,26 +150,25 @@
                         <Border BorderBrush="DarkGray" BorderThickness="1" Margin="0 12 0 0">
                             <ScrollViewer MaxHeight="360" MinHeight="200" Margin="0 0 0 0">
                                 <StackPanel>
-                                    <TextBlock 
-                                            x:Name="txtContent" 
-                                            MinHeight="360"
-                                            Text="{Binding Content}" 
-                                            
-                                            TextWrapping="WrapWithOverflow" 
-                                            FontSize="12" 
-                                            Padding="12"
+                                    <TextBox 
+                                        x:Name="txtContent" 
+                                        MinHeight="360"
+                                        Text="{Binding Content}" 
+                                        TextWrapping="WrapWithOverflow" 
+                                        FontSize="12" 
+                                        Padding="12"
                                         >
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock" BasedOn="{StaticResource NoteContent}">
-                                                <!--<Setter Property="FontFamily" Value="Segoe UI"/>-->
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource NoteContent}">
+                                                <Setter Property="FontFamily" Value="Segoe UI"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsCode}" Value="True">
                                                         <Setter Property="FontFamily" Value="Consolas"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
+                                        </TextBox.Style>
+                                    </TextBox>
                                 </StackPanel>
                             </ScrollViewer>
                         </Border>
@@ -189,7 +188,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/Images/pencil.png" Height="16" Width="16" Margin="0 0 8 0"/>
                                     <TextBlock Text="Edit"/>
-                                </StackPanel> 
+                                </StackPanel>
                             </Button>
                             <Button x:Name="btn_DeleteNote" Padding="4" Margin="4 0 0 0" 
                                     Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.OnDeleteSelectedNote}">
