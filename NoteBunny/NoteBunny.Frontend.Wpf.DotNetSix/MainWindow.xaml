@@ -137,9 +137,9 @@
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel Grid.Column="2" x:Name="spSelected" Margin="10" Visibility="Hidden">
+                <StackPanel Grid.Column="2" x:Name="spSelected" Margin="10" Visibility="Visible">
                     <Viewbox Height="48" HorizontalAlignment="Left">
-                        <TextBlock x:Name="lblSubject" TextWrapping="WrapWithOverflow" Text="{Binding Subject}" Style="{StaticResource SubjectHeader}"/>
+                        <TextBlock x:Name="lblSubject" TextWrapping="WrapWithOverflow" Text="{Binding Subject, FallbackValue=Title}" Style="{StaticResource SubjectHeader}"/>
                     </Viewbox>
                     <Label x:Name="txtDetails" Content="{Binding Details}" Style="{StaticResource DetailLine}" Height="32"/>
                     <StackPanel x:Name="txtOnView">
@@ -171,7 +171,7 @@
                                      >
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/Images/star.png" Height="16" Width="16" Margin="0 0 8 0"/>
-                                    <TextBlock Text="{Binding Path=IsPinned, Converter={StaticResource pinnedConverter}}" />
+                                    <TextBlock Text="{Binding Path=IsPinned, FallbackValue=Pin/Unpin, Converter={StaticResource pinnedConverter}}" />
                                 </StackPanel>
                             </Button>
                             <Button x:Name="btn_EditNote" Padding="4" Margin="4 0 4 0" Click="Btn_EditNote_Click">

@@ -1,13 +1,12 @@
-﻿using NoteBunny.FrontEnd.Wpf.DotNetSix.Context;
+﻿using NoteBunny.BLL.Enums;
+using NoteBunny.FrontEnd.Wpf.DotNetSix.Context;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Helpers;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Windows;
-using NoteBunny.FrontEnd.Wpf.DotNetSix.Enumerations;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using NoteBunny.BLL.Enums;
 
 namespace NoteBunny.Frontend.Wpf.DotNetSix
 {
@@ -25,13 +24,12 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
 
             txtSearchAlt.Focus();
 
-            //cbxSortOptions.ItemsSource = Enum.GetNames(typeof(NoteSortOptions));
-            //cbxSortDirection.ItemsSource = Enum.GetNames(typeof(SortDirection));
-            //cbxSortDirection.SelectedIndex = (int)SortDirection.Descending;
             cbxSortOptions.SelectionChanged += CbxSortOptions_SelectionChanged;
             cbxSortDirection.SelectionChanged += CbxSortDirection_SelectionChanged;
 
             OpenTagsWindow();
+
+            spSelected.Visibility = Visibility.Hidden;
 
             SelectedNoteContext.OnSelectedNoteChanged += (note) =>
             {
