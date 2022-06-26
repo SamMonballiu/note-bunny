@@ -8,7 +8,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\action_stop.gif" />
+    <None Remove="Images\pencil.png" />
+    <None Remove="Images\search.png" />
+    <None Remove="Images\star.png" />
+    <None Remove="Images\zoom.png" />
     <None Remove="MainWindow.xaml.cs~RF132a70d.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\action_stop.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\pencil.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\search.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\star.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\zoom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

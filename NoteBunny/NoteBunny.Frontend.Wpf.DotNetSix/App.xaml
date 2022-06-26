@@ -21,8 +21,5 @@
             <Setter Property="Padding" Value="0" />
             <Setter Property="Margin" Value="0" />
         </Style>
-        <Style TargetType="Button">
-            <Setter Property="MinWidth" Value="64"/>
-        </Style>
     </Application.Resources>
 </Application>
