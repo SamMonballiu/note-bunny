@@ -9,15 +9,20 @@
 
   <ItemGroup>
     <None Remove="Images\action_stop.gif" />
+    <None Remove="Images\calendar.png" />
     <None Remove="Images\pencil.png" />
     <None Remove="Images\search.png" />
     <None Remove="Images\star.png" />
+    <None Remove="Images\tag.png" />
     <None Remove="Images\zoom.png" />
     <None Remove="MainWindow.xaml.cs~RF132a70d.TMP" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\action_stop.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\calendar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -30,6 +35,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\star.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\tag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

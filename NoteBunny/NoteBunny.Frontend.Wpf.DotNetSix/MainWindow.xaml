@@ -8,6 +8,7 @@
         xmlns:extend="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix.Extensions"
         xmlns:viewmodels="clr-namespace:NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels" 
         xmlns:enums="clr-namespace:NoteBunny.BLL.Enums;assembly=NoteBunny.BLL"
+        xmlns:uc="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix.UserControls"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" 
@@ -141,7 +142,18 @@
                     <Viewbox Height="48" HorizontalAlignment="Left">
                         <TextBlock x:Name="lblSubject" TextWrapping="WrapWithOverflow" Text="{Binding Subject, FallbackValue=Title}" Style="{StaticResource SubjectHeader}"/>
                     </Viewbox>
-                    <Label x:Name="txtDetails" Content="{Binding Details}" Style="{StaticResource DetailLine}" Height="32"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="/Images/calendar.png" Grid.Column="0" Height="16" VerticalAlignment="Center"/>
+                            <Label Grid.Column="1" Content="{Binding CreationDate}" Style="{StaticResource DetailLine}" VerticalAlignment="Center"/>
+                        </Grid>
+                        <uc:Tags />
+                    </StackPanel>
+                    
                     <StackPanel x:Name="txtOnView">
                         <DockPanel Margin="8 0 22 0">
                             <TextBlock VerticalAlignment="Center"  Width="20" Text="{Binding ElementName=txtContent, Path=FontSize, FallbackValue=--}"/>

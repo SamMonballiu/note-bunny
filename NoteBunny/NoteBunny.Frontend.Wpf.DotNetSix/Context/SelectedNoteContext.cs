@@ -16,7 +16,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Context
             }
         }
 
-        public static Action<Note?>? OnSelectedNoteChanged;
+        public static event Action<Note?>? OnSelectedNoteChanged;
         public static bool HasNote => SelectedNote is not null;
     }
 }

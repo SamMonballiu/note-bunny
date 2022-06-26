@@ -22,7 +22,7 @@ namespace NoteBunny.BLL.Models
         public override string ToString() => Subject.Capitalize();
 
         [XmlIgnore, JsonIgnore]
-        public string Details { get => CreatedOn.ToShortDateString() + " • " + string.Join(", ", Tags?.Select(t => t.Name)); }
+        public string CreationDate => CreatedOn.ToShortDateString();
 
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
