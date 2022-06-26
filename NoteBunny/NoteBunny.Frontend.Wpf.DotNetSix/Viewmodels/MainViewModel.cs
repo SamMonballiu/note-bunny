@@ -33,9 +33,6 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
         [ObservableProperty, AlsoNotifyChangeFor(nameof(NoteModels))]
         private bool _onlyPinned = false;
 
-        //[ObservableProperty, AlsoNotifyChangeFor(nameof(IsNotFilterAll))]
-        //private NoteFilterType _filterOn = NoteFilterType.All;
-
         private NoteFilterType _filterOn = NoteFilterType.All;
         public NoteFilterType FilterOn
         {
@@ -87,7 +84,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
         private void SearchNotes()
         {
             _notes = string.IsNullOrWhiteSpace(SearchTerm)
-                ? _noteRepository.GetNotesWithTags().ToObservableCollection()
+                ? _cachedNotes.ToObservableCollection()
                 : NoteFilter.BySearchTerm(_cachedNotes.ToList(), SearchTerm, _filterOn, _match).ToObservableCollection();
             OnPropertyChanged(nameof(NoteModels));
         }
