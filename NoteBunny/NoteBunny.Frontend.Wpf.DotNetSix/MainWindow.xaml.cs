@@ -5,7 +5,6 @@ using NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Windows;
 using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace NoteBunny.Frontend.Wpf.DotNetSix
@@ -24,6 +23,7 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
 
             txtSearchAlt.Focus();
 
+            NotesList.OnSelectedNoteChanged += (noteId) => Viewmodel.OnSetSelectedNote?.Execute(noteId);
             NoteSortOptions.OnSortPropertyChanged += (property) => Viewmodel.OnSetSortProperty?.Execute(property);
             NoteSortOptions.OnSortDirectionChanged += (direction) => Viewmodel.OnSetSortDirection?.Execute(direction);
 
@@ -73,11 +73,7 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
             //}
         }
 
-        private void LstNotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selectedItem = (sender as ListBox)!.SelectedItem as NoteViewModel;
-            Viewmodel.OnSetSelectedNote.Execute(selectedItem?.Id);
-        }
+
 
         private void TxtSearchAlt_KeyDown(object sender, KeyEventArgs e)
         {
