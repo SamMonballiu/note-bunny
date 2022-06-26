@@ -37,7 +37,8 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
             {
                 Subject = Subject,
                 Content = Content,
-                TagIds = tags
+                TagIds = tags,
+                IsPinned = _existingNote?.IsPinned ?? false
             };
 
             if (_existingNote is null)

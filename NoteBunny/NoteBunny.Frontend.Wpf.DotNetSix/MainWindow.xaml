@@ -150,15 +150,26 @@
                         <Border BorderBrush="DarkGray" BorderThickness="1" Margin="0 12 0 0">
                             <ScrollViewer MaxHeight="360" MinHeight="200" Margin="0 0 0 0">
                                 <StackPanel>
-                                        <TextBlock 
+                                    <TextBlock 
                                             x:Name="txtContent" 
                                             MinHeight="360"
                                             Text="{Binding Content}" 
-                                            Style="{StaticResource NoteContent}" 
+                                            
                                             TextWrapping="WrapWithOverflow" 
                                             FontSize="12" 
                                             Padding="12"
-                                            />
+                                        >
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource NoteContent}">
+                                                <!--<Setter Property="FontFamily" Value="Segoe UI"/>-->
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsCode}" Value="True">
+                                                        <Setter Property="FontFamily" Value="Consolas"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
                                 </StackPanel>
                             </ScrollViewer>
                         </Border>

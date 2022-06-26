@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using NoteBunny.BLL.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,16 +12,17 @@ namespace NoteBunny.BLL.Models
     {
         public virtual string Subject { get; set; }
         public virtual string Content { get; set; }
-        [XmlIgnore]
-        [JsonIgnore]
+        [XmlIgnore, JsonIgnore]
         public virtual IList<Tag> Tags { get; set; }
         public virtual IList<string> TagIds { get; set; }
         public bool? IsPinned { get; set; } = null;
+        [XmlIgnore, JsonIgnore]
+        public bool IsCode => Tags.Select(x => x.Name.ToLower()).Any(x => x.Equals("code"));
 
-        public override string ToString() => Subject.First().ToString().ToUpper() + Subject.Substring(1);
+        public override string ToString() => Subject.Capitalize();
 
         [XmlIgnore, JsonIgnore]
-        public string Details { get => CreatedOn.ToShortDateString() + " • " + String.Join(", ", Tags?.Select(t => t.Name)); }
+        public string Details { get => CreatedOn.ToShortDateString() + " • " + string.Join(", ", Tags?.Select(t => t.Name)); }
 
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

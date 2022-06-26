@@ -1,4 +1,5 @@
 ﻿using NoteBunny.BLL.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,5 +26,7 @@ namespace NoteBunny.BLL.Extensions
         {
             return others.All(x => me.ToLowerInvariant().Contains(x.ToLowerInvariant()));
         }
+        
+        internal static string Capitalize(this string original) => string.Concat(original.First().ToString().ToUpper(), original.AsSpan(1));
     }
 }
