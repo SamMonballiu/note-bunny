@@ -80,23 +80,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <Grid Margin="0 8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <ComboBox Grid.Column="0" 
-                                  x:Name="cbxSortOptions" 
-                                  Margin="0 0 4 0" 
-                                  ItemsSource="{Binding Source={extend:EnumBindingSource {x:Type enums:NoteSortOptions}}}"
-                                  SelectedIndex="0" />
-                        <ComboBox Grid.Column="1" 
-                                  x:Name="cbxSortDirection" 
-                                  Margin="4 0 0 0"
-                                  ItemsSource="{Binding Source={extend:EnumBindingSource {x:Type enums:SortDirection}}}"
-                                  SelectedIndex="1" />
-                    </Grid>
+                    <uc:NoteSortOptions x:Name="NoteSortOptions" />
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <Grid Visibility="Visible" VerticalAlignment="Center" Width="{Binding ElementName=lstNotes, Path=ActualWidth}">

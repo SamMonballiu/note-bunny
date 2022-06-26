@@ -24,8 +24,8 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
 
             txtSearchAlt.Focus();
 
-            cbxSortOptions.SelectionChanged += CbxSortOptions_SelectionChanged;
-            cbxSortDirection.SelectionChanged += CbxSortDirection_SelectionChanged;
+            NoteSortOptions.OnSortPropertyChanged += (property) => Viewmodel.OnSetSortProperty?.Execute(property);
+            NoteSortOptions.OnSortDirectionChanged += (direction) => Viewmodel.OnSetSortDirection?.Execute(direction);
 
             OpenTagsWindow();
 
@@ -40,19 +40,8 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
             };
         }
 
-        private void CbxSortDirection_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selectedSortDirection = (SortDirection)(sender as ComboBox)!.SelectedIndex;
-            Viewmodel.OnSetSortDirection?.Execute(selectedSortDirection);
-        }
 
         #region EVENT HANDLERS 
-
-        private void CbxSortOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selectedSortingOption = (NoteSortOptions)(sender as ComboBox)!.SelectedIndex;
-            Viewmodel.OnSetSortProperty?.Execute(selectedSortingOption);
-        }
 
         private void Btn_NewNote_Click(object sender, RoutedEventArgs e)
         {
