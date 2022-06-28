@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Images\action_stop.gif" />
     <None Remove="Images\calendar.png" />
+    <None Remove="Images\copy.png" />
     <None Remove="Images\pencil.png" />
     <None Remove="Images\search.png" />
     <None Remove="Images\star.png" />
@@ -23,6 +24,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\calendar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\copy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

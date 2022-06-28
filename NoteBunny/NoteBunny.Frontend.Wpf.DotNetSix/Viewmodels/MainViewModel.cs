@@ -51,7 +51,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
 
         [ObservableProperty]
         private MatchType _match = MatchType.Any;
-        
+
         public RelayCommand OnGetData { get; init; }
         public RelayCommand OnSearch { get; init; }
         public RelayCommand<string> OnSetSelectedNote { get; init; }
@@ -59,6 +59,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
         public RelayCommand<SortDirection> OnSetSortDirection { get; init; }
         public RelayCommand OnDeleteSelectedNote { get; init; }
         public RelayCommand<Note> OnToggleNotePinned { get; init; }
+        public RelayCommand<Note> OnCopyToClipboard { get; init; }
 
         public MainViewModel(INoteRepository noteRepository)
         {
@@ -72,6 +73,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
             OnDeleteSelectedNote = new RelayCommand(DeleteSelectedNote);
             OnGetData = new RelayCommand(GetData);
             OnToggleNotePinned = new RelayCommand<Note>(ToggleNotePinned);
+            OnCopyToClipboard = new RelayCommand<Note>(CopyToClipboard);
         }
 
         private void GetData()
@@ -135,6 +137,10 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
             _noteRepository.Update(note);
             OnPropertyChanged(nameof(NoteModels));
             _noteRepository.Save();
+        }
+
+        private void CopyToClipboard(Note note) { 
+            Clipboard.SetText(note.Content);
         }
     }
 }
