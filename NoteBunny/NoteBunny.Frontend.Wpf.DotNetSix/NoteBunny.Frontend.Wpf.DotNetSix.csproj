@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>bunny.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,10 @@
     <None Remove="Images\tag.png" />
     <None Remove="Images\zoom.png" />
     <None Remove="MainWindow.xaml.cs~RF132a70d.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="bunny.ico" />
   </ItemGroup>
 
   <ItemGroup>
