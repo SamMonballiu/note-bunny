@@ -17,7 +17,7 @@ namespace NoteBunny.BLL.Models
         public virtual IList<string> TagIds { get; set; }
         public bool? IsPinned { get; set; } = null;
         [XmlIgnore, JsonIgnore]
-        public bool IsCode => Tags.Select(x => x.Name.ToLower()).Any(x => x.Equals("code"));
+        public bool IsCode => Tags?.Select(x => x.Name.ToLower()).Any(x => x.Equals("code")) ?? false;
 
         public override string ToString() => Subject.Capitalize();
 

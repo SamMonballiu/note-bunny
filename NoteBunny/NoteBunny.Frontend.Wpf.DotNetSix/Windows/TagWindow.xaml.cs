@@ -90,7 +90,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Windows
         private void LstTags_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selectedTag = (TagListEntry)lstTags.SelectedItem;
-            _parent.txtSearchAlt.Text = selectedTag.Name;
+            //_parent.txtSearchAlt.Text = selectedTag.Name;
             //_parent.DoSearch();
             _parent.Focus();
         }

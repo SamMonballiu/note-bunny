@@ -3,9 +3,7 @@ using NoteBunny.FrontEnd.Wpf.DotNetSix.Context;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Helpers;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Windows;
-using System;
 using System.Windows;
-using System.Windows.Input;
 
 namespace NoteBunny.Frontend.Wpf.DotNetSix
 {
@@ -20,8 +18,6 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
         {
             InitializeComponent();
             DataContext = new MainViewModel(RepositoryFactory.GetJsonRepositories().noteRepository);
-
-            txtSearchAlt.Focus();
 
             NotesList.OnSelectedNoteChanged += (noteId) => Viewmodel.OnSetSelectedNote?.Execute(noteId);
             NoteSortOptions.OnSortPropertyChanged += (property) => Viewmodel.OnSetSortProperty?.Execute(property);
@@ -71,23 +67,6 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
             //{
             //    statusTxt.Text += additionalText;
             //}
-        }
-
-
-
-        private void TxtSearchAlt_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return || e.Key == Key.Enter)
-            {
-                try
-                {
-                    Viewmodel.OnSearch?.Execute(null);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "Something went wrong.");
-                }
-            }
         }
 
         private void Menu_Tags_Click(object sender, RoutedEventArgs e)
