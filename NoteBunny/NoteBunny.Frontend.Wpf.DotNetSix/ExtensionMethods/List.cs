@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace NoteBunny.Frontend.Wpf.DotNetSix.ExtensionMethods
+namespace NoteBunny.FrontEnd.Wpf.DotNetSix.ExtensionMethods
 {
     public static class Extensions
     {
