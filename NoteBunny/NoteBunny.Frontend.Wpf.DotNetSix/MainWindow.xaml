@@ -20,9 +20,17 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem x:Name="menu_Tags" Header="_Tags" Click="Menu_Tags_Click" IsEnabled="False"/>
-            </MenuItem>
-            <MenuItem x:Name="menu_Export" Header="E_xport" Click="menu_Export_Click"/>
-            <MenuItem x:Name="menu_Import" Header="_Import" Click="menu_Import_Click"/>
+                <MenuItem x:Name="menu_Export" Header="E_xport" Click="menu_Export_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/arrow_right.png" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="menu_Import" Header="_Import" Click="menu_Import_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/arrow_left.png" Height="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                </MenuItem>
         </Menu>
         <StackPanel DockPanel.Dock="Top" >
 
