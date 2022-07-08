@@ -4,7 +4,7 @@ using NoteBunny.BLL.Enums;
 using NoteBunny.BLL.Helpers;
 using NoteBunny.BLL.Interfaces;
 using NoteBunny.BLL.Models;
-using NoteBunny.Frontend.Wpf.DotNetSix.ExtensionMethods;
+using NoteBunny.FrontEnd.Wpf.DotNetSix.ExtensionMethods;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Context;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Helpers;
 using System;
@@ -24,8 +24,8 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
         [ObservableProperty, AlsoNotifyChangeFor(nameof(NoteModels))]
         private ObservableCollection<Note> _notes;
 
-        public List<NoteViewModel> NoteModels
-            => _noteSorter.Sort(_onlyPinned ? _notes.Where(x => x.IsPinned == true) : _notes).Select(NoteViewModel.FromNote).ToList();
+        public ObservableCollection<NoteViewModel> NoteModels
+            => _noteSorter.Sort(_onlyPinned ? _notes.Where(x => x.IsPinned == true) : _notes).Select(NoteViewModel.FromNote).ToObservableCollection();
 
         [ObservableProperty]
         private string _searchTerm = string.Empty;
@@ -133,6 +133,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
         private void ToggleNotePinned(Note note)
         {
             if (note is null) return;
+            note.IsPinned ??= false;
             note.IsPinned = !note.IsPinned;
             _noteRepository.Update(note);
             OnPropertyChanged(nameof(NoteModels));

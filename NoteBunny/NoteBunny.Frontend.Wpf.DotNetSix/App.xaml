@@ -23,5 +23,8 @@
             <Setter Property="IsReadOnly" Value="True" />
             <Setter Property="IsReadOnlyCaretVisible" Value="False" />
         </Style>
+        <Style TargetType="Window" x:Key="WindowStyle">
+            <Setter Property="Background" Value="#eee" />
+        </Style>
     </Application.Resources>
 </Application>

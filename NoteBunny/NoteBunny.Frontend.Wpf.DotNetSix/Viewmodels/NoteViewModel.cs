@@ -1,4 +1,6 @@
 ﻿using NoteBunny.BLL.Models;
+using NoteBunny.Frontend.Wpf.DotNetSix.Models;
+using System;
 
 namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
 {
@@ -16,7 +18,9 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
         public string Id { get; init; }
         public bool? IsPinned { get; init; }
         public bool IsCode { get; init; }
+        public string? Tags { get; init; }
 
         public static NoteViewModel FromNote(Note note) => new(note.Subject, note.Id, note.IsPinned, note.IsCode);
+        public static NoteViewModel FromNoteDto(NoteDto dto) => new(dto.Subject, dto.Id, false, false) { Tags = dto.Tags };
     }
 }

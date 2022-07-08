@@ -10,8 +10,12 @@
 
   <ItemGroup>
     <None Remove="Images\action_stop.gif" />
+    <None Remove="Images\arrow_left.png" />
+    <None Remove="Images\arrow_right.png" />
     <None Remove="Images\calendar.png" />
     <None Remove="Images\copy.png" />
+    <None Remove="Images\disk.png" />
+    <None Remove="Images\folder_go.png" />
     <None Remove="Images\pencil.png" />
     <None Remove="Images\search.png" />
     <None Remove="Images\star.png" />
@@ -25,30 +29,42 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Images\action_stop.gif">
+    <Resource Include="Images\action_stop.gif">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Images\calendar.png">
+    </Resource>
+    <Resource Include="Images\arrow_left.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Images\copy.png">
+    </Resource>
+    <Resource Include="Images\arrow_right.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Resource>
+    <Resource Include="Images\calendar.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\copy.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\disk.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\folder_go.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Images\pencil.png">
+    <Resource Include="Images\pencil.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Images\search.png">
+    </Resource>
+    <Resource Include="Images\search.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Images\star.png">
+    </Resource>
+    <Resource Include="Images\star.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Images\tag.png">
+    </Resource>
+    <Resource Include="Images\tag.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

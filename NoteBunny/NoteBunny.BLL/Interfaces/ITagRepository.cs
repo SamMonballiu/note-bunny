@@ -9,6 +9,7 @@ namespace NoteBunny.BLL.Interfaces
     {
         void Add(Tag record);
         void AddTagsFromString(string tagString);
+        void AddTagsFromStrings(IEnumerable<string> strings);
         bool Delete(Predicate<Tag> condition);
         bool Delete(Tag record);
         Tag FindById(string id);

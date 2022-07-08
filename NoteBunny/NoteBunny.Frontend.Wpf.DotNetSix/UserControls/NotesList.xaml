@@ -5,15 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix.UserControls"
              mc:Ignorable="d" 
+             x:Name="notesList"
              d:DesignHeight="450" d:DesignWidth="200">
     <ListBox 
         x:Name="lstNotes" 
-        ItemsSource="{Binding NoteModels}" 
+        ItemsSource="{Binding Notes, ElementName=notesList}" 
         FontSize="12" 
         MinHeight="360" 
         MaxHeight="360" 
         SelectionChanged="LstNotes_SelectionChanged"
         SelectedValuePath="Id"
+        SelectionMode="{Binding SelectionMode, ElementName=notesList}"
     >
         <ListBox.ItemTemplate>
             <DataTemplate>
@@ -30,7 +32,10 @@
                             </Style>
                         </Image.Style>
                     </Image>
-                    <TextBlock Width="280" Text="{Binding Subject}" TextTrimming="WordEllipsis"/>
+                    <TextBlock 
+                        Text="{Binding Subject}" 
+                        TextTrimming="WordEllipsis"
+                        />
                 </StackPanel>
             </DataTemplate>
         </ListBox.ItemTemplate>

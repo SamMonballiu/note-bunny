@@ -1,11 +1,11 @@
 ﻿using NoteBunny.BLL.Enums;
+using NoteBunny.Frontend.Wpf.DotNetSix.Windows;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Context;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Helpers;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Windows;
-using System;
+using System.Linq;
 using System.Windows;
-using System.Windows.Input;
 
 namespace NoteBunny.Frontend.Wpf.DotNetSix
 {
@@ -21,9 +21,7 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
             InitializeComponent();
             DataContext = new MainViewModel(RepositoryFactory.GetJsonRepositories().noteRepository);
 
-            txtSearchAlt.Focus();
-
-            NotesList.OnSelectedNoteChanged += (noteId) => Viewmodel.OnSetSelectedNote?.Execute(noteId);
+            NotesList.OnSelectedNoteChanged += (selected) => Viewmodel.OnSetSelectedNote?.Execute(selected.SingleOrDefault());
             NoteSortOptions.OnSortPropertyChanged += (property) => Viewmodel.OnSetSortProperty?.Execute(property);
             NoteSortOptions.OnSortDirectionChanged += (direction) => Viewmodel.OnSetSortDirection?.Execute(direction);
 
@@ -73,23 +71,6 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
             //}
         }
 
-
-
-        private void TxtSearchAlt_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return || e.Key == Key.Enter)
-            {
-                try
-                {
-                    Viewmodel.OnSearch?.Execute(null);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "Something went wrong.");
-                }
-            }
-        }
-
         private void Menu_Tags_Click(object sender, RoutedEventArgs e)
         {
             OpenTagsWindow();
@@ -102,6 +83,16 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
             tags.Top = 0;
             tags.Left = 0;
             tags.Show();
+        }
+
+        private void menu_Export_Click(object sender, RoutedEventArgs e)
+        {
+            new ExportNotes().ShowDialog();
+        }
+
+        private void menu_Import_Click(object sender, RoutedEventArgs e)
+        {
+            new ImportNotes().ShowDialog();
         }
     }
 }
