@@ -10,6 +10,7 @@
         mc:Ignorable="d"
         Title="Export" Width="1000" SizeToContent="Height"
         Style="{StaticResource WindowStyle}"
+        Closing="Window_Closing"
         >
     <StackPanel Margin="12">
         <StackPanel.Resources>
@@ -38,7 +39,7 @@
             </Expander>
             <uc:NoteTransfer Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Left="{Binding Path=NoteModels}" Right="{Binding Path=ExportCandidates}" Margin="-12 0 -12 0"/>
             <uc:NoteSortOptions Grid.Column="0" Grid.Row="3" x:Name="NoteSortOptions" Margin="0 0 12 0" />
-            <Button Grid.Column="1" Grid.Row="3" Command="{Binding OnConfirm}" HorizontalAlignment="Right">
+            <Button Grid.Column="1" Grid.Row="3" Click="Button_Click" HorizontalAlignment="Right">
                 <Image Source="/Images/disk.png" Height="16"/>
             </Button>
         </Grid>

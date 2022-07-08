@@ -15,6 +15,7 @@
     <None Remove="Images\calendar.png" />
     <None Remove="Images\copy.png" />
     <None Remove="Images\disk.png" />
+    <None Remove="Images\folder_go.png" />
     <None Remove="Images\pencil.png" />
     <None Remove="Images\search.png" />
     <None Remove="Images\star.png" />
@@ -44,6 +45,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\disk.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\folder_go.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

@@ -1,8 +1,10 @@
 ﻿using NoteBunny.BLL.Enums;
+using NoteBunny.Frontend.Wpf.DotNetSix.Windows;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Context;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Helpers;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels;
 using NoteBunny.FrontEnd.Wpf.DotNetSix.Windows;
+using System.Linq;
 using System.Windows;
 
 namespace NoteBunny.Frontend.Wpf.DotNetSix
@@ -19,7 +21,7 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
             InitializeComponent();
             DataContext = new MainViewModel(RepositoryFactory.GetJsonRepositories().noteRepository);
 
-            NotesList.OnSelectedNoteChanged += (noteId) => Viewmodel.OnSetSelectedNote?.Execute(noteId);
+            NotesList.OnSelectedNoteChanged += (selected) => Viewmodel.OnSetSelectedNote?.Execute(selected.SingleOrDefault());
             NoteSortOptions.OnSortPropertyChanged += (property) => Viewmodel.OnSetSortProperty?.Execute(property);
             NoteSortOptions.OnSortDirectionChanged += (direction) => Viewmodel.OnSetSortDirection?.Execute(direction);
 
@@ -81,6 +83,16 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
             tags.Top = 0;
             tags.Left = 0;
             tags.Show();
+        }
+
+        private void menu_Export_Click(object sender, RoutedEventArgs e)
+        {
+            new ExportNotes().ShowDialog();
+        }
+
+        private void menu_Import_Click(object sender, RoutedEventArgs e)
+        {
+            new ImportNotes().ShowDialog();
         }
     }
 }

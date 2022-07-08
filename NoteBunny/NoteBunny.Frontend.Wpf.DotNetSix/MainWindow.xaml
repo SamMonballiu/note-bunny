@@ -19,8 +19,10 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem x:Name="menu_Tags" Header="_Tags" Click="Menu_Tags_Click"/>
+                <MenuItem x:Name="menu_Tags" Header="_Tags" Click="Menu_Tags_Click" IsEnabled="False"/>
             </MenuItem>
+            <MenuItem x:Name="menu_Export" Header="E_xport" Click="menu_Export_Click"/>
+            <MenuItem x:Name="menu_Import" Header="_Import" Click="menu_Import_Click"/>
         </Menu>
         <StackPanel DockPanel.Dock="Top" >
 
@@ -33,7 +35,7 @@
                 <StackPanel Grid.Column="0" Margin="10">
                     <uc:SearchControl Term="{Binding SearchTerm, Mode=TwoWay}" OnSearch="{Binding OnSearch}" />
                     <uc:NoteSearchOptions FilterOn="{Binding FilterOn}" Match="{Binding Match}" IsMatchEnabled="{Binding IsNotFilterAll}" />
-                    <uc:NotesList x:Name="NotesList" Notes="{Binding NoteModels}" />
+                    <uc:NotesList x:Name="NotesList" Notes="{Binding NoteModels}" SelectionMode="Single" />
                     <uc:NoteSortOptions x:Name="NoteSortOptions" />
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">

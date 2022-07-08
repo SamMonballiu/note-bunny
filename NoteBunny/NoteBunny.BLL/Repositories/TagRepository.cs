@@ -34,6 +34,22 @@ namespace NoteBunny.BLL.Repositories
             _tagRepo.Save();
         }
 
+        public void AddTagsFromStrings(IEnumerable<string> strings)
+        {
+            var existingTags = _tagRepo.GetAll();
+            var newTagCandidates = string.Join(",", strings.Select(x => x.Trim())).Split(",");
+
+            foreach (var tag in newTagCandidates)
+            {
+                if (!existingTags.Any(x => x.Name.ToLower() == tag.ToLower()))
+                {
+                    var newTag = new Tag(tag);
+                    _tagRepo.Add(newTag);
+                }
+            }
+            _tagRepo.Save();
+        }
+
         public List<Tag> GetTagsFromString(string tagString)
         {
             var results = new List<Tag>();

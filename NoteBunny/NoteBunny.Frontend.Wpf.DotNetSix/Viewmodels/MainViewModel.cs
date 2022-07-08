@@ -133,6 +133,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
         private void ToggleNotePinned(Note note)
         {
             if (note is null) return;
+            note.IsPinned ??= false;
             note.IsPinned = !note.IsPinned;
             _noteRepository.Update(note);
             OnPropertyChanged(nameof(NoteModels));
