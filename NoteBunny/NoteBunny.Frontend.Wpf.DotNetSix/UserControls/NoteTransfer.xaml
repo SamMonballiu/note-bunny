@@ -30,15 +30,22 @@
 
         <StackPanel Grid.Column="0">
             <local:NotesList x:Name="LeftList" Notes="{Binding Left, ElementName=nt}" SelectionMode="Extended"/>
-            <Button x:Name="ToRight" HorizontalAlignment="Right">
-                <Image Source="/Images/arrow_right.png" />
-            </Button>
+            <DockPanel LastChildFill="True">
+                <Label Content="{Binding Left.Count, ElementName=nt}" Opacity=".85"/>
+                <Button x:Name="ToRight" HorizontalAlignment="Right">
+                    <Image Source="/Images/arrow_right.png" />
+                </Button>
+            </DockPanel>
         </StackPanel>
         <StackPanel Grid.Column="2">
             <local:NotesList x:Name="RightList" Notes="{Binding Right, ElementName=nt}" SelectionMode="Extended"/>
-            <Button x:Name="ToLeft" HorizontalAlignment="Left">
-                <Image Source="/Images/arrow_left.png" />
-            </Button>
+            <DockPanel LastChildFill="True">
+                <Label DockPanel.Dock="Right" Content="{Binding Right.Count, ElementName=nt}" Opacity=".85"/>
+                <Button x:Name="ToLeft" HorizontalAlignment="Left">
+                    <Image Source="/Images/arrow_left.png" />
+                </Button>
+            </DockPanel>
+            
         </StackPanel>
     </Grid>
 </UserControl>
