@@ -6,6 +6,7 @@
         xmlns:uc="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix.UserControls"
         xmlns:vc="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix.ValueConverters"
         xmlns:viewmodels="clr-namespace:NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels"
+        xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="NoteBunny" 
@@ -64,44 +65,9 @@
                     </Viewbox>
                     
                     <StackPanel x:Name="txtOnView">
-                        <DockPanel Margin="8 0 22 0" Visibility="Collapsed">
-                            <TextBlock VerticalAlignment="Center"  Width="20" Text="{Binding ElementName=txtContent, Path=FontSize, FallbackValue=--}"/>
-                            <Slider Maximum="64" Minimum="12" TickFrequency="2" IsSnapToTickEnabled="True" TickPlacement="TopLeft" Value="{Binding ElementName=txtContent, Path=FontSize}" />
-                        </DockPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0 0 0 12">
-                            <Grid VerticalAlignment="Center">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="32"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Source="/Images/calendar.png" Grid.Column="0" Height="16" VerticalAlignment="Center"/>
-                                <Label Grid.Column="1" Content="{Binding CreationDate}" Style="{StaticResource DetailLine}" VerticalAlignment="Center"/>
-                            </Grid>
-                            <uc:Tags />
-                        </StackPanel>
-                        <ScrollViewer MaxHeight="360" MinHeight="200" Margin="0 0 0 0" VerticalScrollBarVisibility="Auto">
-                            <StackPanel>
-                                <TextBox 
-                                    x:Name="txtContent" 
-                                    MinHeight="360"
-                                    Text="{Binding Content}" 
-                                    TextWrapping="WrapWithOverflow" 
-                                    FontSize="12" 
-                                    Padding="12"
-                                    >
-                                    <TextBox.Style>
-                                        <Style TargetType="TextBox" BasedOn="{StaticResource NoteContent}">
-                                            <Setter Property="FontFamily" Value="Segoe UI"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsCode}" Value="True">
-                                                    <Setter Property="FontFamily" Value="Consolas"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBox.Style>
-                                </TextBox>
-                            </StackPanel>
-                        </ScrollViewer>
+                        
+                        
+                        <uc:NoteView x:Name="NoteView"/>
                         
                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 8 0 0">
                             <Button 

@@ -7,6 +7,7 @@
              xmlns:extend="clr-namespace:NoteBunny.Frontend.Wpf.DotNetSix.Extensions"
              xmlns:enums="clr-namespace:NoteBunny.BLL.Enums;assembly=NoteBunny.BLL"
              mc:Ignorable="d" 
+             x:Name="ucNoteSearchOptions"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid VerticalAlignment="Center" Margin="0 12 0 8">
         <Grid.ColumnDefinitions>
@@ -22,7 +23,7 @@
         <DockPanel Grid.Column="1">
             <Label DockPanel.Dock="Left">Match:</Label>
             <ComboBox DockPanel.Dock="Left" x:Name="cbxMatchType" 
-                                      IsEnabled="{Binding IsMatchEnabled}"
+                                      IsEnabled="{Binding IsMatchEnabled, ElementName=ucNoteSearchOptions}"
                                       ItemsSource="{Binding Source={extend:EnumBindingSource {x:Type enums:MatchType}}}"
                                       SelectedValue="{Binding Match}">
                 <ComboBox.Style>

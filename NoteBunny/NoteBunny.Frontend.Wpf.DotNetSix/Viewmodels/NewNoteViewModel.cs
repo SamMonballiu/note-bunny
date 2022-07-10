@@ -8,16 +8,23 @@ using System.Windows.Input;
 
 namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
 {
-    public partial class NewNoteViewModel: ObservableObject
+    public partial class NewNoteViewModel : ObservableObject
     {
         private readonly INoteRepository _noteRepository;
         private readonly ITagRepository _tagRepository;
 
         private readonly Note? _existingNote;
-        
+
         public event Action OnSave;
 
         public string Title => _existingNote is null ? "New note" : "Edit note";
+
+        public bool IsDirty => !_canClose && _existingNote is null
+            ? !string.IsNullOrEmpty(Subject) || !string.IsNullOrEmpty(Content) || !string.IsNullOrEmpty(Tags)
+            : Subject != _existingNote.Subject || Content != _existingNote.Content;
+
+        [ObservableProperty]
+        private bool _useMonospace = true;
 
         [ObservableProperty]
         private string _subject;
@@ -27,6 +34,9 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
 
         [ObservableProperty]
         private string _tags;
+
+        [ObservableProperty]
+        private bool _canClose;
 
         private void Save()
         {
@@ -38,7 +48,9 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
                 Subject = Subject,
                 Content = Content,
                 TagIds = tags,
-                IsPinned = _existingNote?.IsPinned ?? false
+                IsPinned = _existingNote?.IsPinned ?? false,
+                CreatedOn = _existingNote?.CreatedOn ?? DateTime.Now,
+                Id = _existingNote?.Id ?? Guid.NewGuid().ToString()
             };
 
             if (_existingNote is null)
@@ -51,6 +63,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
             }
 
             _noteRepository.Save();
+            CanClose = true;
             OnSave?.Invoke();
         }
 

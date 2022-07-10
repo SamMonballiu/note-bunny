@@ -43,6 +43,11 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix.UserControls
             InitializeComponent();
         }
 
+        public void ClearSelection()
+        {
+            lstNotes.SelectedIndex = -1;
+        }
+
         private void LstNotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItems = (sender as ListBox)!.SelectedItems.OfType<NoteViewModel>();

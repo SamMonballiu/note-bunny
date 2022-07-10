@@ -68,7 +68,7 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix.Viewmodels
                 _noteRepository.Save();
 
                 OnNotesImported?.Invoke(new NoteImportResult { Success = true, Imported = willImport, NotImported = willNotImport });
-            } catch
+            } catch (Exception ex)
             {
                 OnNotesImported?.Invoke(new NoteImportResult { Success = false });
             }
