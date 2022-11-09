@@ -57,8 +57,8 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix.Viewmodels
             try
             {
                 var existingIds = _noteRepository.GetAll().Select(x => x.Id);
-                var willImport = _importCandidates.Where(x => !existingIds.Contains(x.Id));
-                var willNotImport = _importCandidates.Except(willImport);
+                var willImport = _importCandidates.Where(x => !existingIds.Contains(x.Id)).ToList();
+                var willNotImport = _importCandidates.Except(willImport).ToList();
                 
                 var tags = willImport.Select(x => x.Tags).Distinct();
                 _tagRepository.AddTagsFromStrings(tags);
