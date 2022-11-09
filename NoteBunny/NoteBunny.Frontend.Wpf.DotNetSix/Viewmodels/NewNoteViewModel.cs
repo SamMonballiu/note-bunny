@@ -21,7 +21,7 @@ namespace NoteBunny.FrontEnd.Wpf.DotNetSix.Viewmodels
 
         public bool IsDirty => !_canClose && _existingNote is null
             ? !string.IsNullOrEmpty(Subject) || !string.IsNullOrEmpty(Content) || !string.IsNullOrEmpty(Tags)
-            : Subject != _existingNote.Subject || Content != _existingNote.Content;
+            : Subject != _existingNote?.Subject || Content != _existingNote?.Content;
 
         [ObservableProperty]
         private bool _useMonospace = true;
