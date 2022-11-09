@@ -42,6 +42,8 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix
                     : Visibility.Visible;
                 NoteView.Note = note;
             };
+
+            Search.FocusTextBox();
         }
 
 

@@ -42,7 +42,7 @@
                     <ColumnDefinition Width="1.4*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="10">
-                    <uc:SearchControl Term="{Binding SearchTerm, Mode=TwoWay}" OnSearch="{Binding OnSearch}" />
+                    <uc:SearchControl x:Name="Search" Term="{Binding SearchTerm, Mode=TwoWay}" OnSearch="{Binding OnSearch}" />
                     <uc:NoteSearchOptions FilterOn="{Binding FilterOn}" Match="{Binding Match}" IsMatchEnabled="{Binding IsNotFilterAll}" />
                     <uc:NotesList x:Name="NotesList" Notes="{Binding NoteModels}" SelectionMode="Single" />
                     <uc:NoteSortOptions x:Name="NoteSortOptions" />

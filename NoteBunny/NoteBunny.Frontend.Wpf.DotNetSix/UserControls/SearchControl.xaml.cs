@@ -48,6 +48,11 @@ namespace NoteBunny.Frontend.Wpf.DotNetSix.UserControls
             txtSearchAlt.KeyDown += TxtSearchAlt_KeyDown;
         }
 
+        public void FocusTextBox()
+        {
+            txtSearchAlt.Focus();
+        }
+
         private void TxtSearchAlt_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return || e.Key == Key.Enter)
