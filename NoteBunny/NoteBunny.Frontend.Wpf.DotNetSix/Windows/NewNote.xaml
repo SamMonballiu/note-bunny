@@ -8,79 +8,71 @@
         xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf" 
         d:DataContext="{d:DesignInstance Type=viewmodels:NewNoteViewModel}"
         mc:Ignorable="d"
-        Title="{Binding Title}" SizeToContent="Height" Width="1200" ResizeMode="NoResize"
+        Title="{Binding Title}" MinWidth="800" MinHeight="600" ResizeMode="CanResizeWithGrip"
         Style="{StaticResource WindowStyle}">
-    <StackPanel Margin="20">
-        <StackPanel.Resources>
-
-        </StackPanel.Resources>
-        <Label Style="{StaticResource AppHeader}" x:Name="lblHeader" Content="{Binding Title}" />
-        <DockPanel LastChildFill="True">
+    <DockPanel Margin="20" LastChildFill="True">
+        <Label DockPanel.Dock="Top" Style="{StaticResource AppHeader}" x:Name="lblHeader" Content="{Binding Title}" />
+        <DockPanel DockPanel.Dock="Top" LastChildFill="True">
             <Label Width="100">Subject:</Label>
             <TextBox x:Name="txtSubject" Text="{Binding Subject, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
 
-        <DockPanel LastChildFill="True" Margin="0 12 0 0">
+        <DockPanel DockPanel.Dock="Top" LastChildFill="True" Margin="0 12 0 0">
             <Label Width="100">Tags:</Label>
             <TextBox x:Name="txtTags" Text="{Binding Tags}"/>
         </DockPanel>
 
-        <Grid>
+        <StackPanel HorizontalAlignment="Right" Margin=" 0 12 0 0" DockPanel.Dock="Bottom">
+            <Button Grid.Column="1" Grid.Row="3" Command="{Binding HandleSave}" HorizontalAlignment="Right" Height="32" Width="32">
+                <Image Source="/Images/disk.png" Height="16"/>
+            </Button>
+        </StackPanel>
+
+        <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition MaxHeight="600" />
-                <RowDefinition />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="0" Margin="0,20,10,0">
-                <StackPanel Orientation="Horizontal" x:Name="spWidth"></StackPanel>
+            <DockPanel Grid.Column="0" Margin="0,20,10,0">
+                <TextBox 
+                    DockPanel.Dock="Top" 
+                    AcceptsReturn="True" 
+                    AcceptsTab="True"
+                    TextWrapping="Wrap" 
+                    Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                >
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding UseMonospace}" Value="True">
+                                    <Setter Property="FontFamily" Value="Consolas" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            </DockPanel>
 
-                <DockPanel HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=spWidth}" LastChildFill="True">
-                    <!--<Label DockPanel.Dock="Top" Width="100" HorizontalAlignment="Left">Content:</Label>-->
-                    <TextBox 
-                            DockPanel.Dock="Top" 
-                            AcceptsReturn="True" 
-                            AcceptsTab="True"
-                            TextWrapping="Wrap" 
-                            Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            Height="{Binding ActualHeight, ElementName=spHeight}"
-                    >
-                        <TextBox.Style>
-                            <Style TargetType="TextBox">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding UseMonospace}" Value="True">
-                                        <Setter Property="FontFamily" Value="Consolas" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-                </DockPanel>
-            </StackPanel>
-
-            <DockPanel Margin="10 20 0 0" Grid.Column="1" x:Name="spHeight" LastChildFill="True" >
-                <ScrollViewer DockPanel.Dock="Top" MaxHeight="500" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
-                    <Border Style="{StaticResource NoteMarkdownContent}">
+            <DockPanel Margin="10 20 0 0" Grid.Column="1" x:Name="spHeight">
+                <Border Style="{StaticResource NoteMarkdownContent}" x:Name="mdBorder">
+                    <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
                         <markdig:MarkdownViewer 
-                        x:Name="Viewer"
-                        MinHeight="360"
-                        Markdown="{Binding Content, UpdateSourceTrigger=PropertyChanged}" 
-                        FontWeight="Thin"
-                    />
-                    </Border>
-                </ScrollViewer>
+                            x:Name="Viewer"
+                            MinHeight="360"
+                            Markdown="{Binding Content, UpdateSourceTrigger=PropertyChanged}" 
+                            FontWeight="Thin"
+                            Width="{Binding ElementName=mdBorder, Path=ActualWidth}"
+                        />
+                    </ScrollViewer>
+                </Border>
             </DockPanel>
             <CheckBox HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" Content="Monospace" Margin="0 0 20 0" IsChecked="{Binding UseMonospace}"/>
         </Grid>
-        <StackPanel HorizontalAlignment="Right" Margin=" 0 12 0 0">
-            <Button Grid.Column="1" Grid.Row="3" Command="{Binding HandleSave}" HorizontalAlignment="Right" Height="32" Width="32">
-                <Image Source="/Images/disk.png" Height="16"/>
-            </Button>
-        </StackPanel>
-    </StackPanel>
-
+    </DockPanel>
 </Window>
