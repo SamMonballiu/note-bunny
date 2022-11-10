@@ -59,17 +59,15 @@
                 </TextBox>
             </DockPanel>
 
-            <DockPanel Margin="10 20 0 0" Grid.Column="1" x:Name="spHeight">
+            <DockPanel Margin="10 20 0 0" Grid.Column="1">
                 <Border Style="{StaticResource NoteMarkdownContent}" x:Name="mdBorder">
-                    <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
-                        <markdig:MarkdownViewer 
-                            x:Name="Viewer"
-                            MinHeight="360"
-                            Markdown="{Binding Content, UpdateSourceTrigger=PropertyChanged}" 
-                            FontWeight="Thin"
-                            Width="{Binding ElementName=mdBorder, Path=ActualWidth}"
-                        />
-                    </ScrollViewer>
+                    <markdig:MarkdownViewer 
+                        x:Name="Viewer"
+                        MinHeight="360"
+                        Markdown="{Binding Content, UpdateSourceTrigger=PropertyChanged}" 
+                        FontWeight="Thin"
+                        Width="{Binding ElementName=mdBorder, Path=ActualWidth}"
+                    />
                 </Border>
             </DockPanel>
             <CheckBox HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" Content="Monospace" Margin="0 0 20 0" IsChecked="{Binding UseMonospace}"/>
