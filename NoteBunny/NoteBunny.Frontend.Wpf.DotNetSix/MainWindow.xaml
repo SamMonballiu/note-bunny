@@ -10,23 +10,24 @@
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="NoteBunny" 
-        SizeToContent="Height" MinHeight="500" MinWidth="900"
+        SizeToContent="Manual" Width="1000" Height="600"
+        WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
         Style="{StaticResource WindowStyle}"
         >
     <Window.Resources>
         <vc:IsPinnedToTextValueConverter x:Key="pinnedConverter" />
     </Window.Resources>
-    <Grid>
+    <Grid Margin="12">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".33*"/>
+            <ColumnDefinition Width=".4*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0" Margin="10">
             <uc:SearchControl DockPanel.Dock="Top" x:Name="Search" Term="{Binding SearchTerm, Mode=TwoWay}" OnSearch="{Binding OnSearch}" />
             <uc:NoteSearchOptions DockPanel.Dock="Top" FilterOn="{Binding FilterOn}" Match="{Binding Match}" IsMatchEnabled="{Binding IsNotFilterAll}" />
             <uc:NoteSortOptions DockPanel.Dock="Bottom" x:Name="NoteSortOptions" />
-            <Grid DockPanel.Dock="Top" Margin="0 0 0 12" VerticalAlignment="Center" Width="{Binding ElementName=NotesList, Path=ActualWidth}">
+            <Grid DockPanel.Dock="Bottom" Margin="0 8 0 0" VerticalAlignment="Center" Width="{Binding ElementName=NotesList, Path=ActualWidth}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1.5*"/>
                     <ColumnDefinition Width="*"/>
