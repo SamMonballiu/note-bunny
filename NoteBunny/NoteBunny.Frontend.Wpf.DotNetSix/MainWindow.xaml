@@ -22,23 +22,21 @@
             <ColumnDefinition Width=".33*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Margin="10">
-            <uc:SearchControl x:Name="Search" Term="{Binding SearchTerm, Mode=TwoWay}" OnSearch="{Binding OnSearch}" />
-            <uc:NoteSearchOptions FilterOn="{Binding FilterOn}" Match="{Binding Match}" IsMatchEnabled="{Binding IsNotFilterAll}" />
-            <uc:NotesList x:Name="NotesList" Notes="{Binding NoteModels}" SelectionMode="Single" />
-            <uc:NoteSortOptions x:Name="NoteSortOptions" />
+        <DockPanel Grid.Column="0" Margin="10">
+            <uc:SearchControl DockPanel.Dock="Top" x:Name="Search" Term="{Binding SearchTerm, Mode=TwoWay}" OnSearch="{Binding OnSearch}" />
+            <uc:NoteSearchOptions DockPanel.Dock="Top" FilterOn="{Binding FilterOn}" Match="{Binding Match}" IsMatchEnabled="{Binding IsNotFilterAll}" />
+            <uc:NoteSortOptions DockPanel.Dock="Bottom" x:Name="NoteSortOptions" />
+            <Grid DockPanel.Dock="Top" Margin="0 0 0 12" VerticalAlignment="Center" Width="{Binding ElementName=NotesList, Path=ActualWidth}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Grid.Column="0" IsChecked="{Binding OnlyPinned}" Content="Only show pinned" VerticalAlignment="Center"/>
+                <Button Grid.Column="1" x:Name="btn_NewNote" Padding="4" Margin="0 0 4 0" Click="Btn_NewNote_Click">_New</Button>
+            </Grid>
+            <uc:NotesList DockPanel.Dock="Top" x:Name="NotesList" Notes="{Binding NoteModels}" SelectionMode="Single" />
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                <Grid Visibility="Visible" VerticalAlignment="Center" Width="{Binding ElementName=NotesList, Path=ActualWidth}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <CheckBox Grid.Column="0" IsChecked="{Binding OnlyPinned}" Content="Only show pinned" VerticalAlignment="Center"/>
-                    <Button Grid.Column="1" x:Name="btn_NewNote" Padding="4" Margin="0 0 4 0" Click="Btn_NewNote_Click">_New</Button>
-                </Grid>
-            </StackPanel>
-        </StackPanel>
+        </DockPanel>
 
         <DockPanel Grid.Column="2" x:Name="spSelected" Margin="10">
             <Viewbox DockPanel.Dock="Top" Height="48" HorizontalAlignment="Left">

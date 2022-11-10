@@ -12,7 +12,6 @@
         ItemsSource="{Binding Notes, ElementName=notesList}" 
         FontSize="12" 
         MinHeight="360" 
-        MaxHeight="360" 
         SelectionChanged="LstNotes_SelectionChanged"
         SelectedValuePath="Id"
         SelectionMode="{Binding SelectionMode, ElementName=notesList}"
