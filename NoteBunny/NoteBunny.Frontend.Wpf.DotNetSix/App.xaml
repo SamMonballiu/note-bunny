@@ -48,8 +48,8 @@
         </Style>
         <Style TargetType="{x:Type Run}" x:Key="{x:Static markdig:Styles.CodeStyleKey}">
             <Setter Property="Background" Value="#e2e2e2" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontFamily" Value="Consolas, Lucida Sans Typewriter, Courier New" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontFamily" Value="Fira Code, Consolas, Lucida Sans Typewriter, Courier New" />
         </Style>
     </Application.Resources>
 </Application>
